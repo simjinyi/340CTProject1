@@ -34,6 +34,7 @@ public class PlatformGenerator : MonoBehaviour
         if (CalculateOffset(player.transform.position.z) >= index + Platform.LONGEST_PLATFORM_OFFSET)
         {
             Destroy(platforms.Dequeue(), 1.0f);
+            Debug.Log("Destroyed");
             index += Platform.LONGEST_PLATFORM_OFFSET;
         }
     }
