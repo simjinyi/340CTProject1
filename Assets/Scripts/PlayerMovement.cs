@@ -13,8 +13,9 @@ public class PlayerMovement : MonoBehaviour
 	// are using it to mess with physics.
 	void FixedUpdate()
 	{
-		// Add a forward force
-		rb.AddForce(0, 0, forwardForce * Time.deltaTime);
+		if (rb.velocity.magnitude < 30.0)
+			// Add a forward force
+			rb.AddForce(0, 0, forwardForce * Time.deltaTime);
 
 		if (Input.GetKey("d"))  // If the player is pressing the "d" key
 		{
@@ -26,6 +27,12 @@ public class PlayerMovement : MonoBehaviour
 		{
 			// Add a force to the left
 			rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+		}
+
+		if (Input.GetKey("s"))  // If the player is pressing the "a" key
+		{
+			// Add a force to the left
+			rb.AddForce(0, 0, -forwardForce * Time.deltaTime);
 		}
 	}
 }
