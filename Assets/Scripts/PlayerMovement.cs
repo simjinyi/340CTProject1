@@ -15,15 +15,17 @@ public class PlayerMovement : MonoBehaviour
 	{
 		// Add a forward force if the velocity is less than maximum
 		if (rigidBody.velocity.magnitude < 30.0)
-			rigidBody.AddForce(0, 0, forwardForce * Time.deltaTime);
+			rigidBody.AddForce(0, 0, forwardForce * 2 * Time.deltaTime);
 
-		if (Input.GetKey("d"))  // If the player is pressing the "d" key
+		rigidBody.AddForce(0, -forwardForce * Time.deltaTime, 0);
+
+		if (Input.GetKey(KeyCode.RightArrow))  // If the player is pressing the "d" key
 		{
 			// Add a force to the right
 			rigidBody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
 
-		if (Input.GetKey("a"))  // If the player is pressing the "a" key
+		if (Input.GetKey(KeyCode.LeftArrow))  // If the player is pressing the "a" key
 		{
 			// Add a force to the left
 			rigidBody.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);

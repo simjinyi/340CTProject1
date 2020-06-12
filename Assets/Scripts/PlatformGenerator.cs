@@ -57,13 +57,20 @@ public class PlatformGenerator : MonoBehaviour
 
         // 50% to get Flatland
         if (value < 0.5)
+        {
+            Debug.Log("Flatland");
             return new Flatland();
+        }
 
         // 25% to get Highway Bridge
         else if (value < 0.75)
+        {
+            Debug.Log("Highway Bridge");
             return new HighwayBridge();
+        }
 
         // 25% to get Small Bridge
+        Debug.Log("Small Bridge");
         return new SmallBridge();
     }
 

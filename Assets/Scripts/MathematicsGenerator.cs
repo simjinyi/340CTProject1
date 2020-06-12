@@ -7,7 +7,7 @@ public class MathematicsGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
-        Debug.Log(gameObjects.Length);
+        // GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
+        // Debug.Log(gameObjects.Length);
     }
 }
