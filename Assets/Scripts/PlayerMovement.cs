@@ -37,4 +37,10 @@ public class PlayerMovement : MonoBehaviour
 		//	rigidBody.AddForce(0, 0, -forwardForce * Time.deltaTime);
 		//}
 	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		//if (collision.gameObject.tag == "Answer")
+		//	Debug.Log(collision.transform.localPosition.z);
+	}
 }

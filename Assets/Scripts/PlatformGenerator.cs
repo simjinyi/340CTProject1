@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour
@@ -47,6 +46,25 @@ public class PlatformGenerator : MonoBehaviour
         GameObject gameObject = Instantiate(platform.gameObject, new Vector3(platform.vector2.x, platform.vector2.y, CalculateZ(platform.offset)), Quaternion.identity);
         lengthCount += platform.offset;
 
+        GameObject GAME_OBJECT = (GameObject)Resources.Load("Prefabs/Obstacle");
+        GameObject[] spawnpoints = FindGameObjectsWithTag(gameObject, "Spawnpoint");
+
+        if (spawnpoints.Length > 0)
+        {
+            Debug.Log(spawnpoints.Length);
+
+            foreach (GameObject spawnpoint in spawnpoints)
+            {
+                GameObject pb = Instantiate(GAME_OBJECT);
+                pb.transform.SetParent(gameObject.transform);
+                pb.transform.localPosition = spawnpoint.transform.localPosition;
+            }
+        }
+        else
+        {
+            Debug.Log("No Spawnpoint Found");
+        }
+
         return gameObject;
     }
 
@@ -82,5 +100,20 @@ public class PlatformGenerator : MonoBehaviour
     private int CalculateOffset(float location)
     {
         return (int)Math.Floor((location + PLAYER_OFFSET + PLATFORM_OFFSET) / Platform.BASE_LENGTH);
+    }
+
+    private GameObject[] FindGameObjectsWithTag(GameObject parent, string tag)
+    {
+        List<GameObject> gameObjects = new List<GameObject>();
+
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            Transform child = parent.transform.GetChild(i);
+
+            if (child.tag == tag)
+                gameObjects.Add(child.gameObject);
+        }
+
+        return gameObjects.ToArray();
     }
 }
