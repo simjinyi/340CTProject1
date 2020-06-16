@@ -7,9 +7,14 @@ public class PlatformGenerator : MonoBehaviour
     private const float DISTANCE_TO_GENERATE = Platform.BASE_LENGTH * 4;
     private const float PLAYER_OFFSET = 25.0f;
     private const float PLATFORM_OFFSET = -200.0f;
+    private const string SPAWNPOINT_TAG = "Spawnpoint";
 
     private uint lengthCount, index;
     private Queue<GameObject> platforms;
+    private GameObject[] spawnpoints;
+
+    private GameObject nextSpawnpoint;
+    private GameObject prevSpawnpoint;
 
     [SerializeField] private GameObject player;
 
@@ -17,6 +22,7 @@ public class PlatformGenerator : MonoBehaviour
     {
         lengthCount = index = 0;
         platforms = new Queue<GameObject>();
+        spawnpoints = null;
     }
 
     private void Awake()
@@ -36,6 +42,14 @@ public class PlatformGenerator : MonoBehaviour
             Debug.Log("Destroyed");
             index += Platform.LONGEST_PLATFORM_OFFSET;
         }
+
+        //spawnpoints = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
+
+        if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
+        {
+            prevSpawnpoint = nextSpawnpoint;
+            Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
+        }
     }
 
     private GameObject SpawnPlatform()
@@ -46,24 +60,21 @@ public class PlatformGenerator : MonoBehaviour
         GameObject gameObject = Instantiate(platform.gameObject, new Vector3(platform.vector2.x, platform.vector2.y, CalculateZ(platform.offset)), Quaternion.identity);
         lengthCount += platform.offset;
 
-        GameObject GAME_OBJECT = (GameObject)Resources.Load("Prefabs/Obstacle");
-        GameObject[] spawnpoints = FindGameObjectsWithTag(gameObject, "Spawnpoint");
+        //GameObject GAME_OBJECT = (GameObject)Resources.Load("Prefabs/Obstacle");
+        //GameObject[] spawnpoints = FindGameObjectsWithTag(gameObject, "Spawnpoint");
 
-        if (spawnpoints.Length > 0)
-        {
-            Debug.Log(spawnpoints.Length);
+        //if (spawnpoints.Length > 0)
+        //{
+        //    GameObject pb = Instantiate(GAME_OBJECT);
+        //    pb.transform.SetParent(gameObject.transform);
+        //    pb.transform.localPosition = nearestSpawnpoint.transform.localPosition;
+        //}
+        //else
+        //{
+        //    Debug.Log("No Spawnpoint Found");
+        //}
 
-            foreach (GameObject spawnpoint in spawnpoints)
-            {
-                GameObject pb = Instantiate(GAME_OBJECT);
-                pb.transform.SetParent(gameObject.transform);
-                pb.transform.localPosition = spawnpoint.transform.localPosition;
-            }
-        }
-        else
-        {
-            Debug.Log("No Spawnpoint Found");
-        }
+        // spawnpoints = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
 
         return gameObject;
     }
@@ -102,18 +113,53 @@ public class PlatformGenerator : MonoBehaviour
         return (int)Math.Floor((location + PLAYER_OFFSET + PLATFORM_OFFSET) / Platform.BASE_LENGTH);
     }
 
-    private GameObject[] FindGameObjectsWithTag(GameObject parent, string tag)
+    //private GameObject[] FindGameObjectsWithTag(GameObject parent, string tag)
+    //{
+    //    List<GameObject> gameObjects = new List<GameObject>();
+
+    //    for (int i = 0; i < parent.transform.childCount; i++)
+    //    {
+    //        Transform child = parent.transform.GetChild(i);
+
+    //        if (child.tag == tag)
+    //            gameObjects.Add(child.gameObject);
+    //    }
+
+    //    return gameObjects.ToArray();
+    //}
+
+    private GameObject FindNextSpawnpoint()
     {
-        List<GameObject> gameObjects = new List<GameObject>();
+        GameObject bestTarget = null;
 
-        for (int i = 0; i < parent.transform.childCount; i++)
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = player.transform.position;
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
+
+        foreach (GameObject potentialTarget in gameObjects)
         {
-            Transform child = parent.transform.GetChild(i);
+            if (potentialTarget.transform.position.z < currentPosition.z)
+                continue;
 
-            if (child.tag == tag)
-                gameObjects.Add(child.gameObject);
+            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget;
+            }
         }
 
-        return gameObjects.ToArray();
+        return bestTarget;
     }
+
+    //private GameObject FindNextSpawnpoint()
+    //{
+    //    foreach (GameObject spawnpoint in spawnpoints)
+    //        if (spawnpoint.transform.position.z >= player.transform.position.z)
+    //            return spawnpoint;
+
+    //    return null;
+    //}
 }

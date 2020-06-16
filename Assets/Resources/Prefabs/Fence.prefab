@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &7685835858579024918
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398055397261425800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 232.83684, y: 106.80814, z: 12.387083}
+  m_Center: {x: -109.629105, y: 53.403828, z: -0.00002288818}
+--- !u!65 &8970655813017625576
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398055397467330129}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 232.83675, y: 106.80814, z: 12.387078}
+  m_Center: {x: -109.62931, y: 53.40395, z: -0.000022888185}
 --- !u!1 &9126704270854973291
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +37,7 @@ GameObject:
   - component: {fileID: 9126704270854973288}
   m_Layer: 0
   m_Name: Fence
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,8 +135,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.009999999
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8955420391024433478, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d, type: 3}
+--- !u!1 &8398055397261425800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 730554894659450373, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d,
+    type: 3}
+  m_PrefabInstance: {fileID: 9126704270761577101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4814553865788018331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4357278916521460758, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d,
@@ -194,8 +227,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.009999999
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8955420391024433478, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d, type: 3}
+--- !u!1 &8398055397467330129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 730554894659450373, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d,
+    type: 3}
+  m_PrefabInstance: {fileID: 9126704271537922132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4814553865036850242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4357278916521460758, guid: 2a8aa9f3869b23a4b83a4d84c1fe983d,

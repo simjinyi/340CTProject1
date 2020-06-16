@@ -5,19 +5,19 @@ public class Question
     public const short ARRAY_LENGTH = 3;
 
     public string question { get; set; }
-    public float[] answers { get; set; }
+    public Tuple<float, bool>[] answers { get; set; }
 
     public Question()
     {
-        answers = new float[ARRAY_LENGTH];
+        answers = new Tuple<float, bool>[ARRAY_LENGTH];
     }
 
-    public float[] GetRoundedAnswers()
+    public Tuple<float, bool>[] GetRoundedAnswers()
     {
-        float[] newAnswers = new float[ARRAY_LENGTH];
+        Tuple<float, bool>[] newAnswers = new Tuple<float, bool>[ARRAY_LENGTH];
 
         for (int i = 0; i < ARRAY_LENGTH; i++)
-            newAnswers[i] = (float) Math.Round(answers[i], 2);
+            newAnswers[i] = new Tuple<float, bool>((float)Math.Round(answers[i].Item1, 2), answers[i].Item2);
 
         return newAnswers;
     }
