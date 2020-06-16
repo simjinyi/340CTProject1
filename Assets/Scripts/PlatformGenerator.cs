@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlatformGenerator : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlatformGenerator : MonoBehaviour
     private const float PLAYER_OFFSET = 25.0f;
     private const float PLATFORM_OFFSET = -200.0f;
     private const string SPAWNPOINT_TAG = "Spawnpoint";
+    private const string ANSWER_TAG = "Answer";
 
     private uint lengthCount, index;
     private Queue<GameObject> platforms;
@@ -16,13 +18,17 @@ public class PlatformGenerator : MonoBehaviour
     private GameObject nextSpawnpoint;
     private GameObject prevSpawnpoint;
 
-    [SerializeField] private GameObject player;
+    private QuestionGenerator questionGenerator;
+
+    public GameObject player;
+    public Text text;
 
     private PlatformGenerator()
     {
         lengthCount = index = 0;
         platforms = new Queue<GameObject>();
         spawnpoints = null;
+        questionGenerator = new QuestionGenerator(AgeGroup._6TO8, Difficulty.EASY);
     }
 
     private void Awake()
@@ -48,7 +54,15 @@ public class PlatformGenerator : MonoBehaviour
         if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
         {
             prevSpawnpoint = nextSpawnpoint;
-            Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
+            GameObject ago = Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
+            GameObject[] answers = FindGameObjectsWithTag(ago, ANSWER_TAG);
+            
+            Question q = questionGenerator.Generate();
+
+            text.text = q.question;
+            
+            for (int i = 0; i < answers.Length; i++)
+                answers[i].transform.Find("text").GetComponent<TextMesh>().text = q.answers[i].Item1.ToString();
         }
     }
 
@@ -113,20 +127,20 @@ public class PlatformGenerator : MonoBehaviour
         return (int)Math.Floor((location + PLAYER_OFFSET + PLATFORM_OFFSET) / Platform.BASE_LENGTH);
     }
 
-    //private GameObject[] FindGameObjectsWithTag(GameObject parent, string tag)
-    //{
-    //    List<GameObject> gameObjects = new List<GameObject>();
+    private GameObject[] FindGameObjectsWithTag(GameObject parent, string tag)
+    {
+        List<GameObject> gameObjects = new List<GameObject>();
 
-    //    for (int i = 0; i < parent.transform.childCount; i++)
-    //    {
-    //        Transform child = parent.transform.GetChild(i);
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            Transform child = parent.transform.GetChild(i);
 
-    //        if (child.tag == tag)
-    //            gameObjects.Add(child.gameObject);
-    //    }
+            if (child.tag == tag)
+                gameObjects.Add(child.gameObject);
+        }
 
-    //    return gameObjects.ToArray();
-    //}
+        return gameObjects.ToArray();
+    }
 
     private GameObject FindNextSpawnpoint()
     {

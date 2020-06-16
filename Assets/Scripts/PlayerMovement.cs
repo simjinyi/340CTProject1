@@ -55,21 +55,24 @@ public class PlayerMovement : MonoBehaviour
 	void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.tag == FENCE_TAG)
+        {
+			rigidBody.AddForce(sidewaysForce * 2 * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 			enable_move_left = enable_move_right = false;
+		}
 
 		// Check if colliding with the walls
 		if (collision.gameObject.tag == LEFT_WALL_TAG)
 		{
 			Debug.Log(LEFT_WALL_TAG);
 			enable_move_left = false;
-			rigidBody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+			rigidBody.AddForce(sidewaysForce * 2 * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
 
 		if (collision.gameObject.tag == RIGHT_WALL_TAG)
 		{
 			Debug.Log(RIGHT_WALL_TAG);
 			enable_move_right = false;
-			rigidBody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+			rigidBody.AddForce(-sidewaysForce * 2 * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
 
 		//if (collision.gameObject.tag == "Answer")

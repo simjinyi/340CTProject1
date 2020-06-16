@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 
 public enum AgeGroup 
 { 
@@ -17,7 +16,7 @@ delegate float CalculateAnswer(float x, float y);
 public class QuestionGenerator
 {
     private AgeGroup ageGroup;
-    private Difficulty difficulty;
+    public Difficulty difficulty { get; set; }
     private Random random;
 
     private enum Operator
@@ -84,8 +83,11 @@ public class QuestionGenerator
 
         if (op == Operator.SUB || op == Operator.DIV)
         {
-            short largerIndex = operands[0] >= operands[1] ? operands[0] : operands[1];
-            short smallerIndex = (short)(operands.Length - largerIndex - 1);
+            short largerIndex = (short)(operands[0] >= operands[1] ? 0 : 1);
+            short smallerIndex = (short)(largerIndex ^ 1);
+
+            if (largerIndex > 1 || smallerIndex > 1)
+                throw new Exception();
 
             if (op == Operator.DIV)
             {
@@ -106,7 +108,7 @@ public class QuestionGenerator
         float correctAnswer = GetCalculator(op)(operands.Item1, operands.Item2);
 
         if (difficulty == Difficulty.EASY)
-            return (new Tuple<float, bool>[] { new Tuple<float, bool>(correctAnswer - 1, false), new Tuple<float, bool>(correctAnswer, true), new Tuple<float, bool>(correctAnswer + 1, false) }).OrderBy(x => Guid.NewGuid()).ToArray();
+            return (new Tuple<float, bool>[] { new Tuple<float, bool>((correctAnswer - 1) < 0 ? correctAnswer + 2 : correctAnswer - 1, false), new Tuple<float, bool>(correctAnswer, true), new Tuple<float, bool>(correctAnswer + 1, false) }).OrderBy(x => Guid.NewGuid()).ToArray();
 
         Tuple<float, bool>[] correctAnswers = new Tuple<float, bool>[3] { new Tuple<float, bool>(correctAnswer, true), null, null };
 
@@ -122,7 +124,7 @@ public class QuestionGenerator
                 if (correctAnswer - 10 < 0)
                 {
                     correctAnswers[1] = new Tuple<float, bool>(correctAnswer + (random.Next(9) + 1), false);
-                    correctAnswers[2] = new Tuple<float, bool>(correctAnswer - (random.Next(9) + 1), false);
+                    correctAnswers[2] = new Tuple<float, bool>(correctAnswer - (random.Next((int)correctAnswer) + 1), false);
                 }
                 else
                 {
@@ -162,17 +164,17 @@ public class QuestionGenerator
 
     private static float Sub(float x, float y)
     {
-        return x + y;
+        return x - y;
     }
 
     private static float Mul(float x, float y)
     {
-        return x + y;
+        return x * y;
     }
 
     private static float Div(float x, float y)
     {
-        return x + y;
+        return x / y;
     }
 
     private string OperatorToString(Operator op)
