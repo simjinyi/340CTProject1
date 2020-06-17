@@ -942,7 +942,7 @@ GameObject:
   - component: {fileID: 1632717501}
   - component: {fileID: 1632717500}
   m_Layer: 5
-  m_Name: BackButton
+  m_Name: pauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -965,8 +965,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: 280}
-  m_SizeDelta: {x: 80, y: 55}
+  m_AnchoredPosition: {x: 620, y: 300}
+  m_SizeDelta: {x: 80, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1632717500
 MonoBehaviour:
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 93cb6097e83617a4e923c6beacdc2987, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 810210f70380264438f21e396dbb5545, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
