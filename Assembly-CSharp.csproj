@@ -57,11 +57,13 @@
   <ItemGroup>
      <Compile Include="Assets\Demo\Low poly package\Scripts\GameHandler.cs" />
      <Compile Include="Assets\Demo\Low poly package\Scripts\ScreenshotHandler.cs" />
+     <Compile Include="Assets\Scripts\BackButton.cs" />
      <Compile Include="Assets\Scripts\DontGoThroughThings.cs" />
      <Compile Include="Assets\Scripts\Flatland.cs" />
      <Compile Include="Assets\Scripts\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\HighwayBridge.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\PauseGame.cs" />
      <Compile Include="Assets\Scripts\Platform.cs" />
      <Compile Include="Assets\Scripts\PlatformGenerator.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
