@@ -11,11 +11,13 @@ public class PauseGame : MonoBehaviour
 
     public void ResumeGame()
     {
-        // idk how to write this part......
+        SceneManager.UnloadScene("PauseGame");
+        Time.timeScale = 1f;
     }
 
     public void ReplayGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("GameScene");
     }
 
@@ -26,8 +28,10 @@ public class PauseGame : MonoBehaviour
     }
 
     public void Pause()
-    {    
-        SceneManager.LoadScene("PauseGame");      
+    {
+        SceneManager.LoadScene("PauseGame", LoadSceneMode.Additive);
+        Time.timeScale = 0f;
+              
     }
 
     // Start is called before the first frame update
