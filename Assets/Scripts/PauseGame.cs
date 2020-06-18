@@ -7,7 +7,7 @@ public class PauseGame : MonoBehaviour
     public Button ResumeButton;
     public Button ReplayButton;
     public Button QuitButton;
-    //public Button pauseButton;
+    public Button PauseButton;
 
     public void ResumeGame()
     {
@@ -16,7 +16,7 @@ public class PauseGame : MonoBehaviour
 
     public void ReplayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 4);
+        SceneManager.LoadScene("GameScene");
     }
 
     public void QuitGame()
@@ -25,18 +25,33 @@ public class PauseGame : MonoBehaviour
         Application.Quit();
     }
 
-    /*public void PauseGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }*/
+    public void Pause()
+    {    
+        SceneManager.LoadScene("PauseGame");      
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        ResumeButton.onClick.AddListener(ResumeGame);
-        ReplayButton.onClick.AddListener(ReplayGame);
-        //pauseButton.onClick.AddListener(PauseGame);
-        QuitButton.onClick.AddListener(QuitGame);
+        if (ResumeButton != null)
+        {
+            ResumeButton.onClick.AddListener(ResumeGame);
+        }
+
+        if (ReplayButton != null)
+        {
+            ReplayButton.onClick.AddListener(ReplayGame);
+        }
+
+        if (PauseButton != null)
+        {
+            PauseButton.onClick.AddListener(Pause);
+        }
+
+        if (QuitButton != null)
+        {
+            QuitButton.onClick.AddListener(QuitGame);
+        }
     }
 
 }

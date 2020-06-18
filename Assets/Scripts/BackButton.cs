@@ -6,31 +6,42 @@ using UnityEngine.UI;
 
 public class BackButton : MonoBehaviour
 {
-    public Button backCredit;
-    public Button backInstruction;
-    public Button backSettings;
+    public Button CreditButton;
+    public Button InstructionButton;
+    public Button SettingsButton;
 
     public void CreditToMain()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     public void InstructionToMain()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     public void SettingsToMain()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 4);
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        backCredit.onClick.AddListener(CreditToMain);
-        backInstruction.onClick.AddListener(InstructionToMain);
-        backSettings.onClick.AddListener(SettingsToMain);
+        if (CreditButton != null)
+        {
+            CreditButton.onClick.AddListener(CreditToMain);
+        }
+
+        if (InstructionButton != null)
+        {
+            InstructionButton.onClick.AddListener(InstructionToMain);
+        }
+
+        if (SettingsButton != null)
+        {
+            SettingsButton.onClick.AddListener(SettingsToMain);
+        }
     }
 
 }

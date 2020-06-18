@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 258621011}
   - component: {fileID: 258621010}
   - component: {fileID: 258621009}
+  - component: {fileID: 258621013}
   m_Layer: 5
   m_Name: Canvas (1)
   m_TagString: Untagged
@@ -265,6 +266,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &258621013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258621008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4264b5a09aad9d449284da38127b890, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResumeButton: {fileID: 0}
+  ReplayButton: {fileID: 0}
+  QuitButton: {fileID: 0}
+  PauseButton: {fileID: 1632717500}
 --- !u!1001 &596210799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -941,6 +958,7 @@ GameObject:
   - component: {fileID: 1632717502}
   - component: {fileID: 1632717501}
   - component: {fileID: 1632717500}
+  - component: {fileID: 1632717503}
   m_Layer: 5
   m_Name: pauseButton
   m_TagString: Untagged
@@ -1048,6 +1066,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632717498}
   m_CullTransparentMesh: 0
+--- !u!114 &1632717503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632717498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce0754d8c6623e4fb5356be0548c178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backCredit: {fileID: 0}
+  backInstruction: {fileID: 0}
+  backSettings: {fileID: 0}
 --- !u!1 &1638599650
 GameObject:
   m_ObjectHideFlags: 0
