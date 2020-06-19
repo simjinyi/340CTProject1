@@ -23,8 +23,10 @@ public class PauseGame : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Quit Game!");
-        Application.Quit();
+        //Debug.Log("Quit Game!");
+        //Application.Quit();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     public void Pause()
