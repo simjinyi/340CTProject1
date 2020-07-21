@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 148036853}
   - component: {fileID: 148036852}
   - component: {fileID: 148036851}
+  - component: {fileID: 148036854}
   m_Layer: 5
   m_Name: DropdownAge
   m_TagString: Untagged
@@ -450,6 +451,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148036849}
   m_CullTransparentMesh: 0
+--- !u!114 &148036854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148036849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b616f4f9f13197448cd3582f41c0845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &198216819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1137,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 6 - 8
+  m_Text: EASY
 --- !u!222 &740204278
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1261,7 +1274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 843079734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7869367bafa75a9429a0e64a5f43d930, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b616f4f9f13197448cd3582f41c0845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &910016144
@@ -2369,11 +2382,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: 6 - 8
+    - m_Text: EASY
       m_Image: {fileID: 0}
-    - m_Text: 9 - 10
+    - m_Text: MEDIUM
       m_Image: {fileID: 0}
-    - m_Text: 11 - 12
+    - m_Text: HARD
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
