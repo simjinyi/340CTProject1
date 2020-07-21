@@ -2,6 +2,8 @@
 
 public class PlayerMovement : MonoBehaviour
 {
+	private const float MAX_SPEED = 80.0f;
+
 	private const string FENCE_TAG = "Wall";
 
 	private const string LEFT_WALL_TAG = "Wall Left";
@@ -16,17 +18,38 @@ public class PlayerMovement : MonoBehaviour
 	public float forwardForce = 2000f;  // Variable that determines the forward force
 	public float sidewaysForce = 500f;  // Variable that determines the sideways force
 
+	private float speed;
+
+	public Gameplay gameplay;
+
+	public void SetSpeed(float speed)
+    {
+		if (speed <= 30)
+			return;
+
+		if (speed >= 80)
+			return;
+
+		this.speed = speed;
+    }
+
+	public void IncrementSpeed()
+    {
+		SetSpeed(speed + 1);
+    }
+
 	public PlayerMovement()
     {
 		enable_move_left = enable_move_right = true;
-    }
+		speed = 30;
+	}
 
-	// We marked this as "Fixed"Update because we
-	// are using it to mess with physics.
-	void FixedUpdate()
+    // We marked this as "Fixed"Update because we
+    // are using it to mess with physics.
+    void FixedUpdate()
 	{
 		// Add a forward force if the velocity is less than maximum
-		if (rigidBody.velocity.magnitude < 70.0)
+		if (rigidBody.velocity.magnitude < speed)
 			rigidBody.AddForce(0, 0, forwardForce * 2 * Time.deltaTime);
 
 		rigidBody.AddForce(0, -forwardForce * Time.deltaTime, 0);
@@ -44,12 +67,6 @@ public class PlayerMovement : MonoBehaviour
 				// Add a force to the left
 				rigidBody.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
-
-		//if (Input.GetKey("s"))  // If the player is pressing the "s" key
-		//{
-		//	// Add a force to the left
-		//	rigidBody.AddForce(0, 0, -forwardForce * Time.deltaTime);
-		//}
 	}
 
 	void OnCollisionEnter(Collision collision)
@@ -75,8 +92,8 @@ public class PlayerMovement : MonoBehaviour
 			rigidBody.AddForce(-sidewaysForce * 2 * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
 
-		//if (collision.gameObject.tag == "Answer")
-		//	Debug.Log(collision.transform.localPosition.z);
+		if (collision.gameObject.tag == "Answer")
+			gameplay.AnswerCallback(collision.gameObject);
 	}
 
 	void OnCollisionExit(Collision collision)
