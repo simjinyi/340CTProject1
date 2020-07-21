@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-//[RequireComponent(typeof(DropdownAge))]
 public class SaveDropDownValue : MonoBehaviour
 {
-    Dropdown.OptionData m_NewData, m_NewData2, m_NewData3;
-    List<Dropdown.OptionData> m_Messages = new List<Dropdown.OptionData>();
+    
 
     Dropdown DropdownAge;
     string m_MyString;
@@ -29,12 +27,34 @@ public class SaveDropDownValue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Fetch the Dropdown GameObject the script is attached to
+        DropdownAge.onValueChanged.AddListener(delegate
+        {
+            PlayerPrefs.SetInt(PrefName, DropdownAge.value);
+            PlayerPrefs.Save();
+        });
+
+
+        DropdownAge.value = PlayerPrefs.GetInt(PrefName, 0);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+    /*
+     //Fetch the Dropdown GameObject the script is attached to
         DropdownAge = transform.GetComponent<Dropdown>();
         //Clear the old options of the Dropdown menu
         DropdownAge.ClearOptions();
 
-        /*
+
+
+     //Dropdown.OptionData m_NewData, m_NewData2, m_NewData3;
+    //List<Dropdown.OptionData> m_Messages = new List<Dropdown.OptionData>();
+     
+            
         m_NewData = new Dropdown.OptionData();
         m_NewData.text = "6 - 8";
         m_Messages.Add(m_NewData);
@@ -58,16 +78,6 @@ public class SaveDropDownValue : MonoBehaviour
             //Make the index equal to the total number of entries
             m_Index = m_Messages.Count - 1;
         }
-        */
-
-        DropdownAge.value = PlayerPrefs.GetInt(PrefName, 0);
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    //
+     
+     */
 }
