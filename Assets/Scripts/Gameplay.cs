@@ -44,6 +44,8 @@ public class Gameplay : MonoBehaviour
         lifeText.text = lifeCount + "x";
 
         isCorrectPanelActive = isIncorrectPanelActive = false;
+
+        Debug.Log("Highscore: " + DataPersistence.GetHighScore());
     }
 
     void Update()
@@ -52,6 +54,8 @@ public class Gameplay : MonoBehaviour
         incorrectPanel.SetActive(isIncorrectPanelActive);
 
         score.UpdateScore();
+
+        DataPersistence.SetHighScore(score.GetScore());
 
         if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
         {

@@ -66,6 +66,7 @@
     <Compile Include="Assets\Demo\Low poly package\Scripts\GameHandler.cs" />
     <Compile Include="Assets\Demo\Low poly package\Scripts\ScreenshotHandler.cs" />
     <Compile Include="Assets\Scripts\BackButton.cs" />
+    <Compile Include="Assets\Scripts\DataPersistence.cs" />
     <Compile Include="Assets\Scripts\DontGoThroughThings.cs" />
     <Compile Include="Assets\Scripts\DropDownValue.cs" />
     <Compile Include="Assets\Scripts\Flatland.cs" />
