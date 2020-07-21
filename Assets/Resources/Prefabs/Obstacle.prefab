@@ -419,7 +419,7 @@ PrefabInstance:
     - target: {fileID: 673004424218138295, guid: 0a1c87b46106f524783d116063b4bb54,
         type: 3}
       propertyPath: m_Name
-      value: Rock 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 673004424218138295, guid: 0a1c87b46106f524783d116063b4bb54,
         type: 3}
@@ -601,7 +601,7 @@ PrefabInstance:
     - target: {fileID: 3187468174272225313, guid: 0d9283dfb776492418f15d74e4900e1d,
         type: 3}
       propertyPath: m_Name
-      value: Rock 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3187468174272225313, guid: 0d9283dfb776492418f15d74e4900e1d,
         type: 3}
@@ -713,12 +713,12 @@ PrefabInstance:
     - target: {fileID: 3015703785301325837, guid: 14de40ad977c3054ab5f055c0e68ef9d,
         type: 3}
       propertyPath: m_Name
-      value: Rock 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3015703785301325837, guid: 14de40ad977c3054ab5f055c0e68ef9d,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Answer
       objectReference: {fileID: 0}
     - target: {fileID: 3595342076490648785, guid: 14de40ad977c3054ab5f055c0e68ef9d,
         type: 3}

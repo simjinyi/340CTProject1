@@ -8,33 +8,24 @@ public class PlatformGenerator : MonoBehaviour
     private const float DISTANCE_TO_GENERATE = Platform.BASE_LENGTH * 4;
     private const float PLAYER_OFFSET = 25.0f;
     private const float PLATFORM_OFFSET = -200.0f;
-    private const string SPAWNPOINT_TAG = "Spawnpoint";
-    private const string ANSWER_TAG = "Answer";
 
     private uint lengthCount, index;
     private Queue<GameObject> platforms;
-    private GameObject[] spawnpoints;
-
-    private GameObject nextSpawnpoint;
-    private GameObject prevSpawnpoint;
-
-    private QuestionGenerator questionGenerator;
 
     public GameObject player;
-    public Text text;
 
     private PlatformGenerator()
     {
         lengthCount = index = 0;
         platforms = new Queue<GameObject>();
-        spawnpoints = null;
-        questionGenerator = new QuestionGenerator(AgeGroup._6TO8, Difficulty.EASY);
     }
 
     private void Awake()
     {
         for (int i = 0; i < 4; i++)
             platforms.Enqueue(SpawnPlatform());
+
+        InvokeRepeating("IncrementSpeed", 0, 5.0f);
     }
 
     private void Update()
@@ -48,22 +39,11 @@ public class PlatformGenerator : MonoBehaviour
             Debug.Log("Destroyed");
             index += Platform.LONGEST_PLATFORM_OFFSET;
         }
+    }
 
-        //spawnpoints = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
-
-        if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
-        {
-            prevSpawnpoint = nextSpawnpoint;
-            GameObject ago = Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
-            GameObject[] answers = FindGameObjectsWithTag(ago, ANSWER_TAG);
-            
-            Question q = questionGenerator.Generate();
-
-            text.text = q.question;
-            
-            for (int i = 0; i < answers.Length; i++)
-                answers[i].transform.Find("text").GetComponent<TextMesh>().text = q.answers[i].Item1.ToString();
-        }
+    private void IncrementSpeed()
+    {
+        player.GetComponent<PlayerMovement>().IncrementSpeed();
     }
 
     private GameObject SpawnPlatform()
@@ -74,22 +54,6 @@ public class PlatformGenerator : MonoBehaviour
         GameObject gameObject = Instantiate(platform.gameObject, new Vector3(platform.vector2.x, platform.vector2.y, CalculateZ(platform.offset)), Quaternion.identity);
         lengthCount += platform.offset;
 
-        //GameObject GAME_OBJECT = (GameObject)Resources.Load("Prefabs/Obstacle");
-        //GameObject[] spawnpoints = FindGameObjectsWithTag(gameObject, "Spawnpoint");
-
-        //if (spawnpoints.Length > 0)
-        //{
-        //    GameObject pb = Instantiate(GAME_OBJECT);
-        //    pb.transform.SetParent(gameObject.transform);
-        //    pb.transform.localPosition = nearestSpawnpoint.transform.localPosition;
-        //}
-        //else
-        //{
-        //    Debug.Log("No Spawnpoint Found");
-        //}
-
-        // spawnpoints = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
-
         return gameObject;
     }
 
@@ -98,22 +62,15 @@ public class PlatformGenerator : MonoBehaviour
         System.Random random = new System.Random();
         double value = random.NextDouble();
 
-        // 50% to get Flatland
-        if (value < 0.5)
-        {
-            Debug.Log("Flatland");
+        // 60% to get Flatland
+        if (value < 0.6)
             return new Flatland();
-        }
 
-        // 25% to get Highway Bridge
-        else if (value < 0.75)
-        {
-            Debug.Log("Highway Bridge");
+        // 20% to get Highway Bridge
+        else if (value < 0.80)
             return new HighwayBridge();
-        }
 
-        // 25% to get Small Bridge
-        Debug.Log("Small Bridge");
+        // 20% to get Small Bridge
         return new SmallBridge();
     }
 
@@ -126,55 +83,4 @@ public class PlatformGenerator : MonoBehaviour
     {
         return (int)Math.Floor((location + PLAYER_OFFSET + PLATFORM_OFFSET) / Platform.BASE_LENGTH);
     }
-
-    private GameObject[] FindGameObjectsWithTag(GameObject parent, string tag)
-    {
-        List<GameObject> gameObjects = new List<GameObject>();
-
-        for (int i = 0; i < parent.transform.childCount; i++)
-        {
-            Transform child = parent.transform.GetChild(i);
-
-            if (child.tag == tag)
-                gameObjects.Add(child.gameObject);
-        }
-
-        return gameObjects.ToArray();
-    }
-
-    private GameObject FindNextSpawnpoint()
-    {
-        GameObject bestTarget = null;
-
-        float closestDistanceSqr = Mathf.Infinity;
-        Vector3 currentPosition = player.transform.position;
-        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(SPAWNPOINT_TAG);
-
-        foreach (GameObject potentialTarget in gameObjects)
-        {
-            if (potentialTarget.transform.position.z < currentPosition.z)
-                continue;
-
-            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-
-            if (dSqrToTarget < closestDistanceSqr)
-            {
-                closestDistanceSqr = dSqrToTarget;
-                bestTarget = potentialTarget;
-            }
-        }
-
-        return bestTarget;
-    }
-
-    //private GameObject FindNextSpawnpoint()
-    //{
-    //    foreach (GameObject spawnpoint in spawnpoints)
-    //        if (spawnpoint.transform.position.z >= player.transform.position.z)
-    //            return spawnpoint;
-
-    //    return null;
-    //}
-
 }
