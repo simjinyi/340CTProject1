@@ -11,7 +11,7 @@ public class PauseGame : MonoBehaviour
 
     public void ResumeGame()
     {
-        SceneManager.UnloadScene("PauseGame");
+        SceneManager.UnloadSceneAsync("PauseGame");
         Time.timeScale = 1f;
     }
 
