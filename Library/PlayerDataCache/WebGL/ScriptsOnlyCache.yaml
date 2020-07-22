@@ -978,4 +978,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/SettingsScene.unity
   - Assets/Scenes/PauseGame.unity
   - Assets/Scenes/GameOver.unity
-  playerPath: C:/Users/jinyi/Desktop/340CTProject1/Builds/Web
+  playerPath: C:/Users/jinyi/Desktop/Web

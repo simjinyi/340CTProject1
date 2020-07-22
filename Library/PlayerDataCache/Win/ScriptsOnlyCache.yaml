@@ -978,5 +978,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/SettingsScene.unity
   - Assets/Scenes/PauseGame.unity
   - Assets/Scenes/GameOver.unity
-  playerPath: C:/Users/jinyi/Desktop/340CTProject1/Builds/Windows/340CT - Project
-    1.exe
+  playerPath: C:/Users/jinyi/Desktop/Windows/340CT - Project 1.exe

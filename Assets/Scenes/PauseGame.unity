@@ -321,6 +321,9 @@ MonoBehaviour:
   mainMenuButton: {fileID: 0}
   resumeButton: {fileID: 0}
   restartButton: {fileID: 0}
+  muteButton: {fileID: 0}
+  pauseButton: {fileID: 0}
+  gameplay: {fileID: 0}
 --- !u!1 &1235343481
 GameObject:
   m_ObjectHideFlags: 0

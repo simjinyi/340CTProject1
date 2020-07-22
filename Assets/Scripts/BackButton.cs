@@ -42,4 +42,18 @@ public class BackButton : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (CreditButton != null)
+                CreditButton.onClick.Invoke();
+
+            if (InstructionButton != null)
+                InstructionButton.onClick.Invoke();
+
+            if (SettingsButton != null)
+                SettingsButton.onClick.Invoke();
+        }
+    }
 }
