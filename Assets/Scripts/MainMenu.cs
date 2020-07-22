@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public Button btnInstruction;
     public Button btnCredit;
     public Button btnSettings;
+    public Button btnQuit;
 
     public void StartGame()
     {
@@ -36,6 +37,7 @@ public class MainMenu : MonoBehaviour
         btnInstruction.onClick.AddListener(LoadInstruction);
         btnCredit.onClick.AddListener(LoadCredit);
         btnSettings.onClick.AddListener(LoadSettings);
+        btnQuit.onClick.AddListener(ExitGame);
     }
 
     public void ExitGame()

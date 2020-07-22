@@ -244,6 +244,7 @@ MonoBehaviour:
   btnInstruction: {fileID: 105906156}
   btnCredit: {fileID: 1232929384}
   btnSettings: {fileID: 1892896307}
+  btnQuit: {fileID: 557984338}
 --- !u!114 &46965785
 MonoBehaviour:
   m_ObjectHideFlags: 0
