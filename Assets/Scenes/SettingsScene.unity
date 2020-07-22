@@ -404,11 +404,11 @@ MonoBehaviour:
   m_Options:
     m_Options:
     - m_Text: 6 - 8
-      m_Image: {fileID: 0}
+      m_Image: {fileID: 21300000, guid: a1aa1780f84eb1f47b9a0bc99eb801c5, type: 3}
     - m_Text: 9 - 10
-      m_Image: {fileID: 0}
+      m_Image: {fileID: 21300000, guid: ee62cb9ebc4cc644eb1238665b41fcb4, type: 3}
     - m_Text: 11 - 12
-      m_Image: {fileID: 0}
+      m_Image: {fileID: 21300000, guid: a94b1a5e6651d7849b7f1eac71de41d1, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1164,6 +1164,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DropdownAge: {fileID: 148036851}
   DropdownDifficulty: {fileID: 1785904192}
+  imgAgeGrp: {fileID: 0}
+  grp1: {fileID: 0}
+  grp2: {fileID: 0}
+  grp3: {fileID: 0}
+  easy: {fileID: 0}
+  medium: {fileID: 0}
+  hard: {fileID: 0}
 --- !u!4 &800940930
 Transform:
   m_ObjectHideFlags: 0
@@ -1311,6 +1318,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DropdownAge: {fileID: 148036851}
   DropdownDifficulty: {fileID: 1785904192}
+  imgAgeGrp: {fileID: 0}
+  grp1: {fileID: 21300000, guid: a1aa1780f84eb1f47b9a0bc99eb801c5, type: 3}
+  grp2: {fileID: 21300000, guid: ee62cb9ebc4cc644eb1238665b41fcb4, type: 3}
+  grp3: {fileID: 21300000, guid: a94b1a5e6651d7849b7f1eac71de41d1, type: 3}
+  easy: {fileID: 21300000, guid: 7c68e28bc3e3724458018662041a8f9f, type: 3}
+  medium: {fileID: 21300000, guid: 247a8d626d6859e489d0585eea059b62, type: 3}
+  hard: {fileID: 21300000, guid: 422cbb62134fc9c4fa6cf5c2ca7ebe0a, type: 3}
 --- !u!1 &910016144
 GameObject:
   m_ObjectHideFlags: 0

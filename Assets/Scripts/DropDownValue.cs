@@ -10,6 +10,12 @@ public class DropDownValue : MonoBehaviour
     public Dropdown DropdownAge;
     public Dropdown DropdownDifficulty;
     public Image imgAgeGrp;
+    public Image imgDifficultly;
+    public Sprite grp1;
+    public Sprite grp2;
+    public Sprite grp3;
+    public Sprite easy;
+    public Sprite medium;
     public Sprite hard;
     //string m_MyString;
     //int m_Index;
@@ -18,19 +24,22 @@ public class DropDownValue : MonoBehaviour
     void Awake()
     {
         imgAgeGrp = DropdownAge.GetComponent<Image>();
+        imgDifficultly = DropdownDifficulty.GetComponent<Image>();
         DropdownAge.onValueChanged.AddListener(delegate
         {
             switch (DropdownAge.value)
             {
                 case 0:
                     DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
-                    imgAgeGrp.sprite = hard;
+                    imgAgeGrp.sprite = grp1;
                     break;
                 case 1:
                     DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
+                    imgAgeGrp.sprite = grp2;
                     break;
                 case 2:
                     DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
+                    imgAgeGrp.sprite = grp3;
                     break;
                 default:
                     break;
@@ -39,16 +48,19 @@ public class DropDownValue : MonoBehaviour
 
         DropdownDifficulty.onValueChanged.AddListener(delegate
         {
-            switch (DropdownAge.value)
+            switch (DropdownDifficulty.value)
             {
                 case 0:
                     DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
+                    imgDifficultly.sprite = easy;
                     break;
                 case 1:
                     DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
+                    imgDifficultly.sprite = medium;
                     break;
                 case 2:
                     DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
+                    imgDifficultly.sprite = hard;
                     break;
                 default:
                     break;
