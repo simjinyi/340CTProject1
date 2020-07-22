@@ -9,19 +9,22 @@ public class DropDownValue : MonoBehaviour
 {
     public Dropdown DropdownAge;
     public Dropdown DropdownDifficulty;
+    public Image imgAgeGrp;
+    public Sprite hard;
     //string m_MyString;
     //int m_Index;
     //const string PrefName = "Age";
 
     void Awake()
     {
-        //DropdownAge = transform.GetComponent<Dropdown>();
+        imgAgeGrp = DropdownAge.GetComponent<Image>();
         DropdownAge.onValueChanged.AddListener(delegate
         {
             switch (DropdownAge.value)
             {
                 case 0:
                     DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
+                    imgAgeGrp.sprite = hard;
                     break;
                 case 1:
                     DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
@@ -34,7 +37,6 @@ public class DropDownValue : MonoBehaviour
             }
         });
 
-        //DropdownDifficulty = transform.GetComponent<Dropdown>();
         DropdownDifficulty.onValueChanged.AddListener(delegate
         {
             switch (DropdownAge.value)
