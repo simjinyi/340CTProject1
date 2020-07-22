@@ -10,13 +10,14 @@ public class DropDownValue : MonoBehaviour
     public Dropdown DropdownAge;
     public Dropdown DropdownDifficulty;
     public Image imgAgeGrp;
-    public Image imgDifficultly;
+    public Image imgDifficulty;
     public Sprite grp1;
     public Sprite grp2;
     public Sprite grp3;
     public Sprite easy;
     public Sprite medium;
     public Sprite hard;
+
     //string m_MyString;
     //int m_Index;
     //const string PrefName = "Age";
@@ -24,7 +25,7 @@ public class DropDownValue : MonoBehaviour
     void Awake()
     {
         imgAgeGrp = DropdownAge.GetComponent<Image>();
-        imgDifficultly = DropdownDifficulty.GetComponent<Image>();
+        imgDifficulty = DropdownDifficulty.GetComponent<Image>();
         DropdownAge.onValueChanged.AddListener(delegate
         {
             switch (DropdownAge.value)
@@ -52,15 +53,15 @@ public class DropDownValue : MonoBehaviour
             {
                 case 0:
                     DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
-                    imgDifficultly.sprite = easy;
+                    imgDifficulty.sprite = easy;
                     break;
                 case 1:
                     DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
-                    imgDifficultly.sprite = medium;
+                    imgDifficulty.sprite = medium;
                     break;
                 case 2:
                     DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
-                    imgDifficultly.sprite = hard;
+                    imgDifficulty.sprite = hard;
                     break;
                 default:
                     break;
@@ -71,66 +72,41 @@ public class DropDownValue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ////DropdownAge = transform.GetComponent<Dropdown>();
-        //DropdownAge.onValueChanged.AddListener(delegate
-        //{
-        //    switch (DropdownAge.value)
-        //    {
-        //        case 0:
-        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
-        //            break;
-        //        case 1:
-        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
-        //            break;
-        //        case 2:
-        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //});
+        imgAgeGrp = DropdownAge.GetComponent<Image>();
+        imgDifficulty = DropdownDifficulty.GetComponent<Image>();
+        Debug.Log(DataPersistence.Settings.GetAgeGroup());
+        
+        if(DataPersistence.Settings.GetDifficulty() == Difficulty.EASY)
+        {
+            imgDifficulty.sprite = easy;
+        }
+        else if(DataPersistence.Settings.GetDifficulty() == Difficulty.MEDIUM)
+        {
+            imgDifficulty.sprite = medium;
+        }
+        else if (DataPersistence.Settings.GetDifficulty() == Difficulty.HARD)
+        {
+            imgDifficulty.sprite = hard;
+        }
 
-        ////DropdownDifficulty = transform.GetComponent<Dropdown>();
-        //DropdownDifficulty.onValueChanged.AddListener(delegate
-        //{
-        //    switch (DropdownAge.value)
-        //    {
-        //        case 0:
-        //            DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
-        //            break;
-        //        case 1:
-        //            DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
-        //            break;
-        //        case 2:
-        //            DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //});
+        if (DataPersistence.Settings.GetAgeGroup() == AgeGroup._6TO8)
+        {
+            imgAgeGrp.sprite = grp1;
+        }
+        else if (DataPersistence.Settings.GetAgeGroup() == AgeGroup._9TO10)
+        {
+            imgAgeGrp.sprite = grp2;
+        }
+        else if (DataPersistence.Settings.GetAgeGroup() == AgeGroup._11TO12)
+        {
+            imgAgeGrp.sprite = grp3;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //DropdownAge = transform.GetComponent<Dropdown>();
-        //DropdownAge.onValueChanged.AddListener(delegate
-        //{
-        //    switch (DropdownAge.value)
-        //    {
-        //        case 0:
-        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
-        //            break;
-        //        case 1:
-        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
-        //            break;
-        //        case 2:
-        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //});
 
         //DropdownDifficulty = transform.GetComponent<Dropdown>();
         //DropdownDifficulty.onValueChanged.AddListener(delegate
