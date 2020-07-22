@@ -16,6 +16,8 @@ public class PauseGame : MonoBehaviour
 
     private bool isMuted;
 
+    public Gameplay gameplay;
+
     private void Start()
     {
         isMuted = DataPersistence.GetMute();
@@ -28,6 +30,7 @@ public class PauseGame : MonoBehaviour
 
         mainMenuButton.onClick.AddListener(() =>
         {
+            gameplay.UpdateHighscore();
             SceneManager.LoadScene("MainMenuScene");
         });
 

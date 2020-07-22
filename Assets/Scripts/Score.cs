@@ -8,7 +8,7 @@ public class Score
     private readonly Text scoreText;
     private readonly Text multiplierText;
     private readonly int initialMultiplier;
-    private int score;
+    private float score;
     private int multiplier;
 
     private float prevPosition;
@@ -41,8 +41,8 @@ public class Score
         float increment = z - prevPosition;
         prevPosition = z;
 
-        score += (int) Math.Ceiling(increment * multiplier / 10);
-        scoreText.text = score.ToString();
+        score += increment * multiplier / 10;
+        scoreText.text = ((int) score).ToString();
     }
 
     public void IncrementMultiplier()
@@ -57,6 +57,6 @@ public class Score
 
     public int GetScore()
     {
-        return score;
+        return (int) score;
     }
 }

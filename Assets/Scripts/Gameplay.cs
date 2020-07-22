@@ -82,7 +82,7 @@ public class Gameplay : MonoBehaviour
         isCorrectPanelActive = isIncorrectPanelActive = false;
         isCorrectAudioActive = isIncorrectAudioActive = false;
 
-        bgm.SetActive(true);
+        bgm.SetActive(!isMuted);
         correctAudio.SetActive(false);
         incorrectAudio.SetActive(false);
     }
@@ -215,13 +215,16 @@ public class Gameplay : MonoBehaviour
 
         if (lifeCount <= 0)
         {
+            UpdateHighscore();
             DataPersistence.SetPreviousScore(score.GetScore());
-
-            if (score.GetScore() > DataPersistence.GetHighScore())
-                DataPersistence.SetHighScore(score.GetScore());
-
             SceneManager.LoadScene("GameOver");
         }
+    }
+
+    public void UpdateHighscore()
+    {
+        if (score.GetScore() > DataPersistence.GetHighScore())
+            DataPersistence.SetHighScore(score.GetScore());
     }
 
     private GameObject FindNextSpawnpoint()
