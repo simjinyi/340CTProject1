@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\GameOver.cs" />
     <Compile Include="Assets\Scripts\Gameplay.cs" />
+    <Compile Include="Assets\Scripts\HighscoreDisplay.cs" />
     <Compile Include="Assets\Scripts\HighwayBridge.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\PauseGame.cs" />
