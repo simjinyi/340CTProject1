@@ -17,6 +17,9 @@ public class DropDownValue : MonoBehaviour
     public Sprite easy;
     public Sprite medium;
     public Sprite hard;
+    public Button SoundButton;
+
+    private bool isMuted;
 
     //string m_MyString;
     //int m_Index;
@@ -72,6 +75,25 @@ public class DropDownValue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isMuted = DataPersistence.GetMute();
+
+        SoundButton.GetComponentInChildren<Text>().text = isMuted ? "Unmute" : "Mute";
+        SoundButton.onClick.AddListener(() =>
+        {
+            if (isMuted)
+            {
+                DataPersistence.SetMute(false);
+                SoundButton.GetComponentInChildren<Text>().text = "Mute";
+                isMuted = false;
+            }
+            else
+            {
+                DataPersistence.SetMute(true);
+                SoundButton.GetComponentInChildren<Text>().text = "Unmute";
+                isMuted = true;
+            }
+        });
+
         imgAgeGrp = DropdownAge.GetComponent<Image>();
         imgDifficulty = DropdownDifficulty.GetComponent<Image>();
         Debug.Log(DataPersistence.Settings.GetAgeGroup());
@@ -114,61 +136,6 @@ public class DropDownValue : MonoBehaviour
     void Update()
     {
 
-        //DropdownDifficulty = transform.GetComponent<Dropdown>();
-        //DropdownDifficulty.onValueChanged.AddListener(delegate
-        //{
-        //    switch (DropdownAge.value)
-        //    {
-        //        case 0:
-        //            DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
-        //            break;
-        //        case 1:
-        //            DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
-        //            break;
-        //        case 2:
-        //            DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //});
     }
 
-    /*
-    public static void onAgeGroupValueChanged()
-    {
-        
-    }
-
-    public static void onDifficultlyValueChanged()
-    {
-        
-    }*/
-
-
-    /*
-    m_NewData = new Dropdown.OptionData();
-    m_NewData.text = "6 - 8";
-    m_Messages.Add(m_NewData);
-
-    //Create a new option for the Dropdown menu which reads "Option 2" and add to messages List
-    m_NewData2 = new Dropdown.OptionData();
-    m_NewData2.text = "9 - 10";
-    m_Messages.Add(m_NewData2);
-
-    //Create a new option for the Dropdown menu which reads "Option 3" and add to messages List
-    m_NewData3 = new Dropdown.OptionData();
-    m_NewData3.text = "11 - 12";
-    m_Messages.Add(m_NewData2);
-
-
-    //Take each entry in the message List
-    foreach (Dropdown.OptionData message in m_Messages)
-    {
-        //Add each entry to the Dropdown
-        DropdownAge.options.Add(message);
-        //Make the index equal to the total number of entries
-        m_Index = m_Messages.Count - 1;
-    }
-    */
 }
