@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class Gameplay : MonoBehaviour
 {
+    private const string LIFE_SPAWNPOINT_TAG = "LifeSpawnpoint";
     private const string SPAWNPOINT_TAG = "Spawnpoint";
     private const string ANSWER_TAG = "Answer";
 
@@ -27,12 +25,17 @@ public class Gameplay : MonoBehaviour
     private bool isIncorrectPanelActive;
 
     public GameObject correctAudio;
+    public bool isCorrectAudioActive;
     public GameObject incorrectAudio;
+    public bool isIncorrectAudioActive;
 
     private Score score;
 
     private GameObject nextSpawnpoint;
     private GameObject prevSpawnpoint;
+
+    private GameObject nextLifeSpawnpoint;
+    private GameObject prevLifeSpawnpoint;
 
     private QuestionGenerator questionGenerator;
 
@@ -42,6 +45,13 @@ public class Gameplay : MonoBehaviour
     private int lifeCount;
 
     private int currentHighscore;
+
+    private System.Random random;
+
+    public Gameplay()
+    {
+        random = new System.Random(DateTime.Now.Second);
+    }
 
     void Start()
     {
@@ -63,10 +73,11 @@ public class Gameplay : MonoBehaviour
                 break;
         }
 
-        lifeCount = 1;
+        lifeCount = 5;
         lifeText.text = lifeCount + "x";
 
         isCorrectPanelActive = isIncorrectPanelActive = false;
+        isCorrectAudioActive = isIncorrectAudioActive = false;
 
         correctAudio.SetActive(false);
         incorrectAudio.SetActive(false);
@@ -77,8 +88,8 @@ public class Gameplay : MonoBehaviour
         correctPanel.SetActive(isCorrectPanelActive);
         incorrectPanel.SetActive(isIncorrectPanelActive);
 
-        correctAudio.SetActive(isCorrectPanelActive);
-        incorrectAudio.SetActive(isIncorrectPanelActive);
+        correctAudio.SetActive(isCorrectAudioActive);
+        incorrectAudio.SetActive(isIncorrectAudioActive);
 
         score.UpdateScore();
 
@@ -89,7 +100,7 @@ public class Gameplay : MonoBehaviour
         {
             prevSpawnpoint = nextSpawnpoint;
             GameObject ago = Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
-            
+
             answers = FindGameObjectsWithTag(ago, ANSWER_TAG);
             question = questionGenerator.Generate();
 
@@ -98,23 +109,57 @@ public class Gameplay : MonoBehaviour
 
             questionText.text = question.question;
         }
+
+        if ((nextLifeSpawnpoint = FindNextLifeSpawnpoint()) != prevLifeSpawnpoint)
+        {
+            prevLifeSpawnpoint = nextLifeSpawnpoint;
+
+            // Add the life, and collider logic will do
+            GameObject life = new GameObject("Life");
+
+            if (random.NextDouble() > 0.9)
+            {
+                SpriteRenderer renderer = life.AddComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>("Images/love shape");
+                life.transform.position = nextLifeSpawnpoint.transform.position;
+                life.tag = "Life";
+                BoxCollider boxCollider = life.AddComponent<BoxCollider>();
+                boxCollider.isTrigger = true;
+            }
+        }
     }
 
     private async void ShowCorrectPanel()
     {
+        isIncorrectAudioActive = false;
         isIncorrectPanelActive = false;
+        isCorrectAudioActive = true;
         isCorrectPanelActive = true;
-        await Task.Delay(TimeSpan.FromSeconds(3));
+        await Task.Delay(TimeSpan.FromSeconds(2));
         isCorrectPanelActive = false;
+        isCorrectAudioActive = false;
     }
 
     private async void ShowIncorrectPanel(string message)
     {
+        isCorrectAudioActive = false;
         isCorrectPanelActive = false;
         hintText.text = message;
         isIncorrectPanelActive = true;
-        await Task.Delay(TimeSpan.FromSeconds(3));
+        isIncorrectAudioActive = true;
+        await Task.Delay(TimeSpan.FromSeconds(2));
         isIncorrectPanelActive = false;
+        isIncorrectAudioActive = false;
+    }
+
+    public async void AddLifeCallback(GameObject gameObject)
+    {
+        Destroy(gameObject);
+        lifeText.text = ++lifeCount + "x";
+        isIncorrectAudioActive = false;
+        isCorrectAudioActive = true;
+        await Task.Delay(TimeSpan.FromSeconds(1));
+        isCorrectAudioActive = false;
     }
 
     public void AnswerCallback(GameObject gameObject)
@@ -203,5 +248,31 @@ public class Gameplay : MonoBehaviour
         }
 
         return gameObjects.ToArray();
+    }
+
+    private GameObject FindNextLifeSpawnpoint()
+    {
+        GameObject bestTarget = null;
+
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = player.transform.position;
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(LIFE_SPAWNPOINT_TAG);
+
+        foreach (GameObject potentialTarget in gameObjects)
+        {
+            if (potentialTarget.transform.position.z < currentPosition.z)
+                continue;
+
+            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget;
+            }
+        }
+
+        return bestTarget;
     }
 }

@@ -108,4 +108,10 @@ public class PlayerMovement : MonoBehaviour
 		if (collision.gameObject.tag == RIGHT_WALL_TAG)
 			enable_move_right = true;
 	}
+
+    private void OnTriggerEnter(Collider collider)
+    {
+		if (collider.gameObject.tag == "Life")
+			gameplay.AddLifeCallback(collider.gameObject);
+	}
 }
