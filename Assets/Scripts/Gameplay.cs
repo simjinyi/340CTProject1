@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -141,36 +142,36 @@ public class Gameplay : MonoBehaviour
         }
     }
 
-    private async void ShowCorrectPanel()
+    private IEnumerator ShowCorrectPanel()
     {
         isIncorrectAudioActive = false;
         isIncorrectPanelActive = false;
         isCorrectAudioActive = !isMuted;
         isCorrectPanelActive = true;
-        await Task.Delay(TimeSpan.FromSeconds(2));
+        yield return new WaitForSeconds(2);
         isCorrectPanelActive = false;
         isCorrectAudioActive = false;
     }
 
-    private async void ShowIncorrectPanel(string message)
+    private IEnumerator ShowIncorrectPanel(string message)
     {
         isCorrectAudioActive = false;
         isCorrectPanelActive = false;
         hintText.text = message;
         isIncorrectPanelActive = true;
         isIncorrectAudioActive = !isMuted;
-        await Task.Delay(TimeSpan.FromSeconds(2));
+        yield return new WaitForSeconds(2);
         isIncorrectPanelActive = false;
         isIncorrectAudioActive = false;
     }
 
-    public async void AddLifeCallback(GameObject gameObject)
+    public IEnumerator AddLifeCallback(GameObject gameObject)
     {
         Destroy(gameObject);
         lifeText.text = ++lifeCount + "x";
         isIncorrectAudioActive = false;
         isCorrectAudioActive = !isMuted;
-        await Task.Delay(TimeSpan.FromSeconds(2));
+        yield return new WaitForSeconds(2);
         isCorrectAudioActive = false;
     }
 
@@ -191,7 +192,7 @@ public class Gameplay : MonoBehaviour
         {
             score.ResetMultiplier();
             --lifeCount;
-            ShowIncorrectPanel(question.question + " = " + correctAnswer);
+            StartCoroutine(ShowIncorrectPanel(question.question + " = " + correctAnswer));
             return;
         }
 
@@ -201,12 +202,12 @@ public class Gameplay : MonoBehaviour
         {
             score.ResetMultiplier();
             --lifeCount;
-            ShowIncorrectPanel(question.question + " = " + correctAnswer);
+            StartCoroutine(ShowIncorrectPanel(question.question + " = " + correctAnswer));
         }
         else
         {
             score.IncrementMultiplier();
-            ShowCorrectPanel();
+            StartCoroutine(ShowCorrectPanel());
         }
             
         Destroy(gameObject);

@@ -112,6 +112,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
 		if (collider.gameObject.tag == "Life")
-			gameplay.AddLifeCallback(collider.gameObject);
+			StartCoroutine(gameplay.AddLifeCallback(collider.gameObject));
 	}
 }
