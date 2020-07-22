@@ -23,6 +23,9 @@ public class Gameplay : MonoBehaviour
     public GameObject incorrectPanel;
     private bool isIncorrectPanelActive;
 
+    public GameObject correctAudio;
+    public GameObject incorrectAudio;
+
     private Score score;
 
     private GameObject nextSpawnpoint;
@@ -37,21 +40,38 @@ public class Gameplay : MonoBehaviour
 
     void Start()
     {
-        questionGenerator = new QuestionGenerator(AgeGroup._6TO8, Difficulty.EASY);
-        score = new Score(player.transform, scoreText, multiplierText, 1);
+        Difficulty difficulty = DataPersistence.Settings.GetDifficulty();
+        questionGenerator = new QuestionGenerator(DataPersistence.Settings.GetAgeGroup(), difficulty);
+
+        switch (difficulty)
+        {
+            case Difficulty.EASY:
+                score = new Score(player.transform, scoreText, multiplierText, 1);
+                break;
+            case Difficulty.MEDIUM:
+                score = new Score(player.transform, scoreText, multiplierText, 2);
+                break;
+            default:
+                score = new Score(player.transform, scoreText, multiplierText, 3);
+                break;
+        }
 
         lifeCount = 5;
         lifeText.text = lifeCount + "x";
 
         isCorrectPanelActive = isIncorrectPanelActive = false;
 
-        Debug.Log("Highscore: " + DataPersistence.GetHighScore());
+        correctAudio.SetActive(false);
+        incorrectAudio.SetActive(false);
     }
 
     void Update()
     {
         correctPanel.SetActive(isCorrectPanelActive);
         incorrectPanel.SetActive(isIncorrectPanelActive);
+
+        correctAudio.SetActive(isCorrectPanelActive);
+        incorrectAudio.SetActive(isIncorrectPanelActive);
 
         score.UpdateScore();
 
