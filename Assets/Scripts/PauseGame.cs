@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -32,8 +33,7 @@ public class PauseGame : MonoBehaviour
     public void Pause()
     {
         SceneManager.LoadScene("PauseGame", LoadSceneMode.Additive);
-        Time.timeScale = 0f;
-              
+        Time.timeScale = 0f;             
     }
 
     // Start is called before the first frame update
