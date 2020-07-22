@@ -28,6 +28,7 @@ public class Gameplay : MonoBehaviour
     public bool isCorrectAudioActive;
     public GameObject incorrectAudio;
     public bool isIncorrectAudioActive;
+    public GameObject bgm;
 
     private Score score;
 
@@ -81,12 +82,21 @@ public class Gameplay : MonoBehaviour
         isCorrectPanelActive = isIncorrectPanelActive = false;
         isCorrectAudioActive = isIncorrectAudioActive = false;
 
+        bgm.SetActive(true);
         correctAudio.SetActive(false);
         incorrectAudio.SetActive(false);
     }
 
     void Update()
-    {      
+    {
+        bool sound = DataPersistence.GetMute();
+
+        if (isMuted != sound)
+        {
+            isMuted = sound;
+            bgm.SetActive(!isMuted);
+        }
+
         correctPanel.SetActive(isCorrectPanelActive);
         incorrectPanel.SetActive(isIncorrectPanelActive);
 
@@ -135,7 +145,7 @@ public class Gameplay : MonoBehaviour
     {
         isIncorrectAudioActive = false;
         isIncorrectPanelActive = false;
-        isCorrectAudioActive = true;
+        isCorrectAudioActive = !isMuted;
         isCorrectPanelActive = true;
         await Task.Delay(TimeSpan.FromSeconds(2));
         isCorrectPanelActive = false;
@@ -148,7 +158,7 @@ public class Gameplay : MonoBehaviour
         isCorrectPanelActive = false;
         hintText.text = message;
         isIncorrectPanelActive = true;
-        isIncorrectAudioActive = true;
+        isIncorrectAudioActive = !isMuted;
         await Task.Delay(TimeSpan.FromSeconds(2));
         isIncorrectPanelActive = false;
         isIncorrectAudioActive = false;
@@ -159,8 +169,8 @@ public class Gameplay : MonoBehaviour
         Destroy(gameObject);
         lifeText.text = ++lifeCount + "x";
         isIncorrectAudioActive = false;
-        isCorrectAudioActive = true;
-        await Task.Delay(TimeSpan.FromSeconds(1));
+        isCorrectAudioActive = !isMuted;
+        await Task.Delay(TimeSpan.FromSeconds(2));
         isCorrectAudioActive = false;
     }
 

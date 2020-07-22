@@ -51,7 +51,7 @@ public static class DataPersistence
 
     public static void SetMute(bool isMuted)
     {
-        PlayerPrefs.SetInt("mute", 1);
+        PlayerPrefs.SetInt("mute", isMuted ? 1 : 0);
         PlayerPrefs.Save();
     }
 
