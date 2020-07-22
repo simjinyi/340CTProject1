@@ -37,4 +37,15 @@ public static class DataPersistence
     {
         return PlayerPrefs.GetInt("highscore", 0);
     }
+
+    public static void SetPreviousScore(int score)
+    {
+        PlayerPrefs.SetInt("previousScore", score);
+        PlayerPrefs.Save();
+    }
+
+    public static int GetPreviousScore()
+    {
+        return PlayerPrefs.GetInt("previousScore", 0);
+    }
 }

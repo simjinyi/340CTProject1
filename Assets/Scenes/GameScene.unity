@@ -184,6 +184,7 @@ MonoBehaviour:
   scoreText: {fileID: 1159719640}
   multiplierText: {fileID: 1180759573}
   lifeText: {fileID: 158829353}
+  highscoreText: {fileID: 366495240}
   correctPanel: {fileID: 633539567}
   hintText: {fileID: 668490170}
   incorrectPanel: {fileID: 493438017}
@@ -373,7 +374,7 @@ RectTransform:
   m_Children:
   - {fileID: 1632717499}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1050,7 +1051,7 @@ PrefabInstance:
     - target: {fileID: 1643371804886752316, guid: 68570c30a0fb5994ea4618953d2250cb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1643371804886752316, guid: 68570c30a0fb5994ea4618953d2250cb,
         type: 3}
@@ -1969,7 +1970,7 @@ RectTransform:
   - {fileID: 717751176}
   - {fileID: 931571619}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2040,7 +2041,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1632717498
 GameObject:

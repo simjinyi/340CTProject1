@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -16,6 +18,7 @@ public class Gameplay : MonoBehaviour
     public Text scoreText;
     public Text multiplierText;
     public Text lifeText;
+    public Text highscoreText;
 
     public GameObject correctPanel;
     private bool isCorrectPanelActive;
@@ -38,10 +41,14 @@ public class Gameplay : MonoBehaviour
 
     private int lifeCount;
 
+    private int currentHighscore;
+
     void Start()
     {
         Difficulty difficulty = DataPersistence.Settings.GetDifficulty();
         questionGenerator = new QuestionGenerator(DataPersistence.Settings.GetAgeGroup(), difficulty);
+
+        currentHighscore = DataPersistence.GetHighScore();
 
         switch (difficulty)
         {
@@ -56,7 +63,7 @@ public class Gameplay : MonoBehaviour
                 break;
         }
 
-        lifeCount = 5;
+        lifeCount = 1;
         lifeText.text = lifeCount + "x";
 
         isCorrectPanelActive = isIncorrectPanelActive = false;
@@ -66,7 +73,7 @@ public class Gameplay : MonoBehaviour
     }
 
     void Update()
-    {
+    {      
         correctPanel.SetActive(isCorrectPanelActive);
         incorrectPanel.SetActive(isIncorrectPanelActive);
 
@@ -75,7 +82,8 @@ public class Gameplay : MonoBehaviour
 
         score.UpdateScore();
 
-        DataPersistence.SetHighScore(score.GetScore());
+        if (score.GetScore() > currentHighscore)
+            highscoreText.text = "Highscore: " + score.GetScore();
 
         if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
         {
@@ -144,6 +152,16 @@ public class Gameplay : MonoBehaviour
         Destroy(gameObject);
 
         lifeText.text = lifeCount + "x";
+
+        if (lifeCount <= 0)
+        {
+            DataPersistence.SetPreviousScore(score.GetScore());
+
+            if (score.GetScore() > DataPersistence.GetHighScore())
+                DataPersistence.SetHighScore(score.GetScore());
+
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     private GameObject FindNextSpawnpoint()

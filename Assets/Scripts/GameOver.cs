@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour
 {
+    public Text currentScoreText;
+    public Text highScoreText;
+
     public Button ReplayGameOverButton;
     public Button QuitGameOverButton;
 
@@ -22,11 +25,10 @@ public class GameOver : MonoBehaviour
 
     void Start()
     {
+        currentScoreText.text = "Current Score: " + DataPersistence.GetPreviousScore().ToString();
+        highScoreText.text = "Highscore: " + DataPersistence.GetHighScore().ToString();
 
         ReplayGameOverButton.onClick.AddListener(ReplayGameOver);
         QuitGameOverButton.onClick.AddListener(QuitGameOver);
-
-
-
     }
 }
