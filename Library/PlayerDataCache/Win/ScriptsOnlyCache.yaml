@@ -59,6 +59,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11358}
     - Class: 114
+      Script: {instanceID: 11676}
+    - Class: 114
       Script: {instanceID: 11744}
     - Class: 114
       Script: {instanceID: 12130}
@@ -73,6 +75,8 @@ ScriptsOnlyBuild:
     - Class: 128
       Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 195
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
@@ -254,6 +258,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11358}
     - Class: 114
+      Script: {instanceID: 11676}
+    - Class: 114
       Script: {instanceID: 11744}
     - Class: 114
       Script: {instanceID: 12130}
@@ -268,6 +274,8 @@ ScriptsOnlyBuild:
     - Class: 128
       Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 195
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
@@ -978,4 +986,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/SettingsScene.unity
   - Assets/Scenes/PauseGame.unity
   - Assets/Scenes/GameOver.unity
-  playerPath: C:/Users/jinyi/Desktop/Windows/340CT - Project 1.exe
+  playerPath: C:/Users/jinyi/Desktop/Builds/Windows/340CT - Project 1.exe
