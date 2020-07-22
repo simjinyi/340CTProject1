@@ -74,6 +74,7 @@ public class Gameplay : MonoBehaviour
 
     private async void ShowCorrectPanel()
     {
+        isIncorrectPanelActive = false;
         isCorrectPanelActive = true;
         await Task.Delay(TimeSpan.FromSeconds(3));
         isCorrectPanelActive = false;
@@ -81,6 +82,7 @@ public class Gameplay : MonoBehaviour
 
     private async void ShowIncorrectPanel(string message)
     {
+        isCorrectPanelActive = false;
         hintText.text = message;
         isIncorrectPanelActive = true;
         await Task.Delay(TimeSpan.FromSeconds(3));

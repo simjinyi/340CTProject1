@@ -7,15 +7,15 @@ using System;
 //[RequireComponent(typeof(DropdownAge))]
 public class DropDownValue : MonoBehaviour
 {
-    Dropdown DropdownAge;
-    Dropdown DropdownDifficulty;
+    public Dropdown DropdownAge;
+    public Dropdown DropdownDifficulty;
     //string m_MyString;
     //int m_Index;
     //const string PrefName = "Age";
 
     void Awake()
     {
-        DropdownAge = transform.GetComponent<Dropdown>();
+        //DropdownAge = transform.GetComponent<Dropdown>();
         DropdownAge.onValueChanged.AddListener(delegate
         {
             switch (DropdownAge.value)
@@ -34,7 +34,7 @@ public class DropDownValue : MonoBehaviour
             }
         });
 
-        DropdownDifficulty = transform.GetComponent<Dropdown>();
+        //DropdownDifficulty = transform.GetComponent<Dropdown>();
         DropdownDifficulty.onValueChanged.AddListener(delegate
         {
             switch (DropdownAge.value)
@@ -52,92 +52,90 @@ public class DropDownValue : MonoBehaviour
                     break;
             }
         });
-
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        DropdownAge = transform.GetComponent<Dropdown>();
-        DropdownAge.onValueChanged.AddListener(delegate
-        {
-            switch (DropdownAge.value)
-            {
-                case 0:
-                    DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
-                    break;
-                case 1:
-                    DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
-                    break;
-                case 2:
-                    DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
-                    break;
-                default:
-                    break;
-            }
-        });
+        ////DropdownAge = transform.GetComponent<Dropdown>();
+        //DropdownAge.onValueChanged.AddListener(delegate
+        //{
+        //    switch (DropdownAge.value)
+        //    {
+        //        case 0:
+        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
+        //            break;
+        //        case 1:
+        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
+        //            break;
+        //        case 2:
+        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //});
 
-        DropdownDifficulty = transform.GetComponent<Dropdown>();
-        DropdownDifficulty.onValueChanged.AddListener(delegate
-        {
-            switch (DropdownAge.value)
-            {
-                case 0:
-                    DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
-                    break;
-                case 1:
-                    DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
-                    break;
-                case 2:
-                    DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
-                    break;
-                default:
-                    break;
-            }
-        });
-
+        ////DropdownDifficulty = transform.GetComponent<Dropdown>();
+        //DropdownDifficulty.onValueChanged.AddListener(delegate
+        //{
+        //    switch (DropdownAge.value)
+        //    {
+        //        case 0:
+        //            DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
+        //            break;
+        //        case 1:
+        //            DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
+        //            break;
+        //        case 2:
+        //            DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //});
     }
 
     // Update is called once per frame
     void Update()
     {
-        DropdownAge = transform.GetComponent<Dropdown>();
-        DropdownAge.onValueChanged.AddListener(delegate
-        {
-            switch (DropdownAge.value)
-            {
-                case 0:
-                    DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
-                    break;
-                case 1:
-                    DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
-                    break;
-                case 2:
-                    DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
-                    break;
-                default:
-                    break;
-            }
-        });
+        //DropdownAge = transform.GetComponent<Dropdown>();
+        //DropdownAge.onValueChanged.AddListener(delegate
+        //{
+        //    switch (DropdownAge.value)
+        //    {
+        //        case 0:
+        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._6TO8);
+        //            break;
+        //        case 1:
+        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._9TO10);
+        //            break;
+        //        case 2:
+        //            DataPersistence.Settings.SetAgeGroup(AgeGroup._11TO12);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //});
 
-        DropdownDifficulty = transform.GetComponent<Dropdown>();
-        DropdownDifficulty.onValueChanged.AddListener(delegate
-        {
-            switch (DropdownAge.value)
-            {
-                case 0:
-                    DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
-                    break;
-                case 1:
-                    DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
-                    break;
-                case 2:
-                    DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
-                    break;
-                default:
-                    break;
-            }
-        });
+        //DropdownDifficulty = transform.GetComponent<Dropdown>();
+        //DropdownDifficulty.onValueChanged.AddListener(delegate
+        //{
+        //    switch (DropdownAge.value)
+        //    {
+        //        case 0:
+        //            DataPersistence.Settings.SetDifficulty(Difficulty.EASY);
+        //            break;
+        //        case 1:
+        //            DataPersistence.Settings.SetDifficulty(Difficulty.MEDIUM);
+        //            break;
+        //        case 2:
+        //            DataPersistence.Settings.SetDifficulty(Difficulty.HARD);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //});
     }
 
     /*
