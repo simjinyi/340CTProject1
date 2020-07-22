@@ -317,11 +317,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4264b5a09aad9d449284da38127b890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ResumeButton: {fileID: 1505082782}
-  ReplayButton: {fileID: 1971587422}
-  QuitButton: {fileID: 1561071144}
-  PauseButton: {fileID: 0}
-  QuestionText: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  mainMenuButton: {fileID: 0}
+  resumeButton: {fileID: 0}
+  restartButton: {fileID: 0}
 --- !u!1 &1235343481
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +662,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606237961}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1606237963
 Camera:
   m_ObjectHideFlags: 0

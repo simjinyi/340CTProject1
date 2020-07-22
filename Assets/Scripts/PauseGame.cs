@@ -5,59 +5,76 @@ using UnityEngine.UI;
 
 public class PauseGame : MonoBehaviour
 {
-    public Button ResumeButton;
-    public Button ReplayButton;
-    public Button QuitButton;
-    public Button PauseButton;
+    private static bool isGamePaused = false;
 
-    public void ResumeGame()
-    {
-        SceneManager.UnloadSceneAsync("PauseGame");
-        Time.timeScale = 1f;
-    }
+    public GameObject pauseMenu;
+    public Button mainMenuButton;
+    public Button resumeButton;
+    public Button restartButton;
+    public Button muteButton;
+    public Button pauseButton;
 
-    public void ReplayGame()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("GameScene");
-    }
+    private bool isMuted;
 
-    public void QuitGame()
+    private void Start()
     {
-        //Debug.Log("Quit Game!");
-        //Application.Quit();
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenuScene");
-    }
+        isMuted = DataPersistence.GetMute();
+        Play();
 
-    public void Pause()
-    {
-        SceneManager.LoadScene("PauseGame", LoadSceneMode.Additive);
-        Time.timeScale = 0f;             
-    }
+        muteButton.GetComponentInChildren<Text>().text = isMuted ? "Unmute" : "Mute";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (ResumeButton != null)
+        pauseButton.onClick.AddListener(Pause);
+        resumeButton.onClick.AddListener(Play);
+
+        mainMenuButton.onClick.AddListener(() =>
         {
-            ResumeButton.onClick.AddListener(ResumeGame);
-        }
+            SceneManager.LoadScene("MainMenuScene");
+        });
 
-        if (ReplayButton != null)
+        restartButton.onClick.AddListener(() =>
         {
-            ReplayButton.onClick.AddListener(ReplayGame);
-        }
+            SceneManager.LoadScene("GameScene");
+        });
 
-        if (PauseButton != null)
+        muteButton.onClick.AddListener(() =>
         {
-            PauseButton.onClick.AddListener(Pause);
-        }
+            if (isMuted)
+            {
+                DataPersistence.SetMute(false);
+                muteButton.GetComponentInChildren<Text>().text = "Mute";
+                isMuted = false;
+            }
+            else
+            {
+                DataPersistence.SetMute(true);
+                muteButton.GetComponentInChildren<Text>().text = "Unmute";
+                isMuted = true;
+            }
+        });
+    }
 
-        if (QuitButton != null)
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            QuitButton.onClick.AddListener(QuitGame);
+            if (isGamePaused)
+                Play();
+            else
+                Pause();
         }
     }
 
+    private void Pause()
+    {
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        isGamePaused = true;
+    }
+
+    private void Play()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        isGamePaused = false;
+    }
 }

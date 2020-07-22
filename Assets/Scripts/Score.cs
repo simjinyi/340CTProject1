@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Score
@@ -6,20 +7,25 @@ public class Score
     private readonly Transform player;
     private readonly Text scoreText;
     private readonly Text multiplierText;
-    private readonly int multiplier;
+    private readonly int initialMultiplier;
     private int score;
+    private int multiplier;
+
+    private float prevPosition;
 
     // Update is called once per frame
     public Score(Transform player, Text scoreText, Text multiplierText, int multiplier)
     {
         this.player = player;
         this.scoreText = scoreText;
-        this.multiplier = multiplier;
+        this.multiplier = initialMultiplier = multiplier;
         this.multiplierText = multiplierText;
 
         score = 0;
         this.scoreText.text = player.position.z.ToString("0");
         this.multiplierText.text = multiplier + "x Multiplier";
+
+        prevPosition = 0;
     }
 
     public void UpdateScore()
@@ -32,8 +38,21 @@ public class Score
             return;
         }
 
-        score = (int) z * multiplier;
+        float increment = z - prevPosition;
+        prevPosition = z;
+
+        score += (int) Math.Ceiling(increment * multiplier / 10);
         scoreText.text = score.ToString();
+    }
+
+    public void IncrementMultiplier()
+    {
+        multiplierText.text = ++multiplier + "x Multiplier";
+    }
+
+    public void ResetMultiplier()
+    {
+        multiplierText.text = (multiplier = initialMultiplier) + "x Multiplier";
     }
 
     public int GetScore()

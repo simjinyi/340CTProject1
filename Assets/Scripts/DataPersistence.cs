@@ -48,4 +48,15 @@ public static class DataPersistence
     {
         return PlayerPrefs.GetInt("previousScore", 0);
     }
+
+    public static void SetMute(bool isMuted)
+    {
+        PlayerPrefs.SetInt("mute", 1);
+        PlayerPrefs.Save();
+    }
+
+    public static bool GetMute()
+    {
+        return PlayerPrefs.GetInt("mute", 0) == 1;
+    }
 }

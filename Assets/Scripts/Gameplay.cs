@@ -43,8 +43,8 @@ public class Gameplay : MonoBehaviour
     private GameObject[] answers;
 
     private int lifeCount;
-
     private int currentHighscore;
+    private bool isMuted;
 
     private System.Random random;
 
@@ -55,6 +55,8 @@ public class Gameplay : MonoBehaviour
 
     void Start()
     {
+        isMuted = DataPersistence.GetMute();
+
         Difficulty difficulty = DataPersistence.Settings.GetDifficulty();
         questionGenerator = new QuestionGenerator(DataPersistence.Settings.GetAgeGroup(), difficulty);
 
@@ -177,6 +179,7 @@ public class Gameplay : MonoBehaviour
 
         if (gameObject == null)
         {
+            score.ResetMultiplier();
             --lifeCount;
             ShowIncorrectPanel(question.question + " = " + correctAnswer);
             return;
@@ -186,11 +189,13 @@ public class Gameplay : MonoBehaviour
 
         if (answer != correctAnswer)
         {
+            score.ResetMultiplier();
             --lifeCount;
             ShowIncorrectPanel(question.question + " = " + correctAnswer);
         }
         else
         {
+            score.IncrementMultiplier();
             ShowCorrectPanel();
         }
             
