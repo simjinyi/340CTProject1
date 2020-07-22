@@ -78,27 +78,33 @@ public class DropDownValue : MonoBehaviour
         
         if(DataPersistence.Settings.GetDifficulty() == Difficulty.EASY)
         {
+            DropdownDifficulty.value = 0;
             imgDifficulty.sprite = easy;
         }
         else if(DataPersistence.Settings.GetDifficulty() == Difficulty.MEDIUM)
         {
+            DropdownDifficulty.value = 1;
             imgDifficulty.sprite = medium;
         }
         else if (DataPersistence.Settings.GetDifficulty() == Difficulty.HARD)
         {
+            DropdownDifficulty.value = 2;
             imgDifficulty.sprite = hard;
         }
 
         if (DataPersistence.Settings.GetAgeGroup() == AgeGroup._6TO8)
         {
+            DropdownAge.value = 0;
             imgAgeGrp.sprite = grp1;
         }
         else if (DataPersistence.Settings.GetAgeGroup() == AgeGroup._9TO10)
         {
+            DropdownAge.value = 1;
             imgAgeGrp.sprite = grp2;
         }
         else if (DataPersistence.Settings.GetAgeGroup() == AgeGroup._11TO12)
         {
+            DropdownAge.value = 2;
             imgAgeGrp.sprite = grp3;
         }
 
