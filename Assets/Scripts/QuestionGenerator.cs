@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 public enum AgeGroup 
 { 
@@ -91,10 +92,13 @@ public class QuestionGenerator
 
             if (op == Operator.DIV)
             {
-                if (operands[smallerIndex] <= 0)
-                    operands[smallerIndex] += 1;
+                List<short> denominators = new List<short>();
 
-                operands[smallerIndex] += (short)(operands[largerIndex] % operands[smallerIndex]);
+                for (int i = 1; i < 100 && i < operands[largerIndex]; ++i)
+                    if (operands[largerIndex] % i == 0)
+                        denominators.Add((short)i);
+
+                operands[smallerIndex] = denominators[random.Next(0, denominators.Count)];
             }
 
             return new Tuple<float, float>(operands[largerIndex], operands[smallerIndex]);
@@ -135,7 +139,7 @@ public class QuestionGenerator
 
             default:
                 correctAnswers[1] = new Tuple<float, bool>(correctAnswer + 10, false);
-                correctAnswers[2] = new Tuple<float, bool>((correctAnswer - 10 < 0) ? (correctAnswer - (random.Next(9) + 1)) : correctAnswer - 10, false);
+                correctAnswers[2] = new Tuple<float, bool>((correctAnswer - 10 < 0) ? (correctAnswer + (random.Next(9) + 1)) : correctAnswer - 10, false);
                 break;
         }
 
