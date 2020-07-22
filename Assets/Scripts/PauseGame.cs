@@ -23,7 +23,7 @@ public class PauseGame : MonoBehaviour
         isMuted = DataPersistence.GetMute();
         Play();
 
-        muteButton.GetComponentInChildren<Text>().text = isMuted ? "Unmute" : "Mute";
+        muteButton.GetComponentInChildren<Text>().text = isMuted ? "Sound Off" : "Sound On";
 
         pauseButton.onClick.AddListener(Pause);
         resumeButton.onClick.AddListener(Play);
@@ -44,13 +44,13 @@ public class PauseGame : MonoBehaviour
             if (isMuted)
             {
                 DataPersistence.SetMute(false);
-                muteButton.GetComponentInChildren<Text>().text = "Mute";
+                muteButton.GetComponentInChildren<Text>().text = "Sound On";
                 isMuted = false;
             }
             else
             {
                 DataPersistence.SetMute(true);
-                muteButton.GetComponentInChildren<Text>().text = "Unmute";
+                muteButton.GetComponentInChildren<Text>().text = "Sound Off";
                 isMuted = true;
             }
         });

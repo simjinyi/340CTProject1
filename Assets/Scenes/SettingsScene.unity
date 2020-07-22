@@ -251,7 +251,6 @@ GameObject:
   - component: {fileID: 73105984}
   - component: {fileID: 73105987}
   - component: {fileID: 73105986}
-  - component: {fileID: 73105985}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -278,21 +277,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &73105985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73105983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 5, y: -5}
-  m_UseGraphicAlpha: 1
 --- !u!114 &73105986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,11 +298,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a69d9575091d5794b9fd575b5ea91d48, type: 3}
-    m_FontSize: 64
+    m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 84
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1227,60 +1211,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740204275}
   m_CullTransparentMesh: 0
---- !u!1 &800940928
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 800940930}
-  - component: {fileID: 800940929}
-  m_Layer: 0
-  m_Name: SettingsLogic
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &800940929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800940928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b616f4f9f13197448cd3582f41c0845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DropdownAge: {fileID: 148036851}
-  DropdownDifficulty: {fileID: 1785904192}
-  imgAgeGrp: {fileID: 0}
-  imgDifficulty: {fileID: 0}
-  grp1: {fileID: 21300000, guid: a1aa1780f84eb1f47b9a0bc99eb801c5, type: 3}
-  grp2: {fileID: 21300000, guid: ee62cb9ebc4cc644eb1238665b41fcb4, type: 3}
-  grp3: {fileID: 21300000, guid: a94b1a5e6651d7849b7f1eac71de41d1, type: 3}
-  easy: {fileID: 21300000, guid: 7c68e28bc3e3724458018662041a8f9f, type: 3}
-  medium: {fileID: 21300000, guid: 247a8d626d6859e489d0585eea059b62, type: 3}
-  hard: {fileID: 21300000, guid: 422cbb62134fc9c4fa6cf5c2ca7ebe0a, type: 3}
-  SoundButton: {fileID: 1816361088}
---- !u!4 &800940930
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800940928}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 426.4668, y: 187.80489, z: -59.01474}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &843079734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,7 +1353,7 @@ MonoBehaviour:
   easy: {fileID: 21300000, guid: 7c68e28bc3e3724458018662041a8f9f, type: 3}
   medium: {fileID: 21300000, guid: 247a8d626d6859e489d0585eea059b62, type: 3}
   hard: {fileID: 21300000, guid: 422cbb62134fc9c4fa6cf5c2ca7ebe0a, type: 3}
-  SoundButton: {fileID: 0}
+  SoundButton: {fileID: 1816361088}
 --- !u!1 &910016144
 GameObject:
   m_ObjectHideFlags: 0

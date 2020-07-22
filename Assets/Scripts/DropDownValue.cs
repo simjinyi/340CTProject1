@@ -77,19 +77,19 @@ public class DropDownValue : MonoBehaviour
     {
         isMuted = DataPersistence.GetMute();
 
-        SoundButton.GetComponentInChildren<Text>().text = isMuted ? "Unmute" : "Mute";
+        SoundButton.GetComponentInChildren<Text>().text = isMuted ? "Sound Off" : "Sound On";
         SoundButton.onClick.AddListener(() =>
         {
             if (isMuted)
             {
                 DataPersistence.SetMute(false);
-                SoundButton.GetComponentInChildren<Text>().text = "Mute";
+                SoundButton.GetComponentInChildren<Text>().text = "Sound On";
                 isMuted = false;
             }
             else
             {
                 DataPersistence.SetMute(true);
-                SoundButton.GetComponentInChildren<Text>().text = "Unmute";
+                SoundButton.GetComponentInChildren<Text>().text = "Sound Off";
                 isMuted = true;
             }
         });
