@@ -19,31 +19,28 @@ public class PlatformGenerator : MonoBehaviour
         platforms = new Queue<GameObject>();
     }
 
-    private void Awake()
+private void Awake()
+{
+    // Add four platforms in the beginning
+    for (int i = 0; i < 4; i++)
+        platforms.Enqueue(SpawnPlatform());
+}
+
+private void Update()
+{
+    // If the player is now close to the end, generate a new platform
+    if (CalculateZ(0) - player.transform.position.z < DISTANCE_TO_GENERATE)
+        platforms.Enqueue(SpawnPlatform());
+
+    // Calculate the distance of the player from the previous platform
+    if (CalculateOffset(player.transform.position.z) >= index + Platform.LONGEST_PLATFORM_OFFSET)
     {
-        for (int i = 0; i < 4; i++)
-            platforms.Enqueue(SpawnPlatform());
-
-        InvokeRepeating("IncrementSpeed", 0, 5.0f);
+        // If the distance is long enough from the previous platform, remove it to reduce memory usage
+        Destroy(platforms.Dequeue(), 1.0f);
+        Debug.Log("Destroyed");
+        index += Platform.LONGEST_PLATFORM_OFFSET;
     }
-
-    private void Update()
-    {
-        if (CalculateZ(0) - player.transform.position.z < DISTANCE_TO_GENERATE)
-            platforms.Enqueue(SpawnPlatform());
-
-        if (CalculateOffset(player.transform.position.z) >= index + Platform.LONGEST_PLATFORM_OFFSET)
-        {
-            Destroy(platforms.Dequeue(), 1.0f);
-            Debug.Log("Destroyed");
-            index += Platform.LONGEST_PLATFORM_OFFSET;
-        }
-    }
-
-    private void IncrementSpeed()
-    {
-        player.GetComponent<PlayerMovement>().IncrementSpeed();
-    }
+}
 
     private GameObject SpawnPlatform()
     {
@@ -51,6 +48,8 @@ public class PlatformGenerator : MonoBehaviour
 
         // Instantiate the platform at the vector3 location without rotation (Quarternion.identity)
         GameObject gameObject = Instantiate(platform.gameObject, new Vector3(platform.vector2.x, platform.vector2.y, CalculateZ(platform.offset)), Quaternion.identity);
+
+        // The lengthCount will be used to calculate the coordinate to populate
         lengthCount += platform.offset;
 
         return gameObject;
@@ -58,6 +57,7 @@ public class PlatformGenerator : MonoBehaviour
 
     private Platform GeneratePlatform()
     {
+        // Instantiate a platform randomly
         System.Random random = new System.Random();
         double value = random.NextDouble();
 
@@ -75,11 +75,13 @@ public class PlatformGenerator : MonoBehaviour
 
     private float CalculateZ(uint offset)
     {
+        // Convert the Z position to populate the platform
         return Platform.BASE_LENGTH * (lengthCount + offset);
     }
 
     private int CalculateOffset(float location)
     {
+        // Get the offset (the lengthCount) from the location of the player
         return (int)Math.Floor((location + PLAYER_OFFSET + PLATFORM_OFFSET) / Platform.BASE_LENGTH);
     }
 }

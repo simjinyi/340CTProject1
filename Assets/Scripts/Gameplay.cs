@@ -55,8 +55,21 @@ public class Gameplay : MonoBehaviour
         random = new System.Random(DateTime.Now.Second);
     }
 
+    private void Awake()
+    {
+        // Increase the speed of the player by 1 unit every 5 second
+        InvokeRepeating("IncrementSpeed", 0, 5.0f);
+    }
+
+    private void IncrementSpeed()
+    {
+        // Call to the player movement script to increment the speed
+        player.GetComponent<PlayerMovement>().IncrementSpeed();
+    }
+
     void Start()
     {
+        // Get the settings
         isMuted = DataPersistence.GetMute();
 
         Difficulty difficulty = DataPersistence.Settings.GetDifficulty();
@@ -64,6 +77,7 @@ public class Gameplay : MonoBehaviour
 
         currentHighscore = DataPersistence.GetHighScore();
 
+        // Set the multiplier based on the difficulty
         switch (difficulty)
         {
             case Difficulty.EASY:
@@ -77,6 +91,7 @@ public class Gameplay : MonoBehaviour
                 break;
         }
 
+        // Initialize the UI components
         lifeCount = 5;
         lifeText.text = lifeCount + "x";
 
@@ -88,59 +103,69 @@ public class Gameplay : MonoBehaviour
         incorrectAudio.SetActive(false);
     }
 
-    void Update()
+void Update()
+{
+    // Check if the sound is muted
+    bool sound = DataPersistence.GetMute();
+
+    if (isMuted != sound)
     {
-        bool sound = DataPersistence.GetMute();
+        isMuted = sound;
+        bgm.SetActive(!isMuted);
+    }
 
-        if (isMuted != sound)
+    // Disable or enable the sound accordingly
+    correctPanel.SetActive(isCorrectPanelActive);
+    incorrectPanel.SetActive(isIncorrectPanelActive);
+
+    correctAudio.SetActive(isCorrectAudioActive);
+    incorrectAudio.SetActive(isIncorrectAudioActive);
+
+    // Update the score
+    score.UpdateScore();
+
+    // Update the highscore if necessary
+    if (score.GetScore() > currentHighscore)
+        highscoreText.text = "Highscore: " + score.GetScore();
+
+    // Triggers when player goes over a question spawnpoint
+    if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
+    {
+        // Instantiate the answer prefabs
+        prevSpawnpoint = nextSpawnpoint;
+        GameObject ago = Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
+
+        // Generate the questions
+        answers = FindGameObjectsWithTag(ago, ANSWER_TAG);
+        question = questionGenerator.Generate();
+
+        // Populate the answers into the map
+        for (int i = 0; i < answers.Length; i++)
+            answers[i].transform.Find("text").GetComponent<TextMesh>().text = question.answers[i].Item1.ToString();
+
+        // Update the text in the game
+        questionText.text = question.question;
+    }
+
+    // Triggers when player goes over a life spawnpoint
+    if ((nextLifeSpawnpoint = FindNextLifeSpawnpoint()) != prevLifeSpawnpoint)
+    {
+        prevLifeSpawnpoint = nextLifeSpawnpoint;
+
+        // 10% chance of generating a life
+        if (random.NextDouble() > 0.9)
         {
-            isMuted = sound;
-            bgm.SetActive(!isMuted);
-        }
-
-        correctPanel.SetActive(isCorrectPanelActive);
-        incorrectPanel.SetActive(isIncorrectPanelActive);
-
-        correctAudio.SetActive(isCorrectAudioActive);
-        incorrectAudio.SetActive(isIncorrectAudioActive);
-
-        score.UpdateScore();
-
-        if (score.GetScore() > currentHighscore)
-            highscoreText.text = "Highscore: " + score.GetScore();
-
-        if ((nextSpawnpoint = FindNextSpawnpoint()) != prevSpawnpoint)
-        {
-            prevSpawnpoint = nextSpawnpoint;
-            GameObject ago = Instantiate((GameObject)Resources.Load("Prefabs/Answer"), nextSpawnpoint.transform.position, Quaternion.identity);
-
-            answers = FindGameObjectsWithTag(ago, ANSWER_TAG);
-            question = questionGenerator.Generate();
-
-            for (int i = 0; i < answers.Length; i++)
-                answers[i].transform.Find("text").GetComponent<TextMesh>().text = question.answers[i].Item1.ToString();
-
-            questionText.text = question.question;
-        }
-
-        if ((nextLifeSpawnpoint = FindNextLifeSpawnpoint()) != prevLifeSpawnpoint)
-        {
-            prevLifeSpawnpoint = nextLifeSpawnpoint;
-
-            // Add the life, and collider logic will do
+            // Instantiate a new life and add it into the game
             GameObject life = new GameObject("Life");
-
-            if (random.NextDouble() > 0.9)
-            {
-                SpriteRenderer renderer = life.AddComponent<SpriteRenderer>();
-                renderer.sprite = Resources.Load<Sprite>("Images/love shape");
-                life.transform.position = nextLifeSpawnpoint.transform.position;
-                life.tag = "Life";
-                BoxCollider boxCollider = life.AddComponent<BoxCollider>();
-                boxCollider.isTrigger = true;
-            }
+            SpriteRenderer renderer = life.AddComponent<SpriteRenderer>();
+            renderer.sprite = Resources.Load<Sprite>("Images/love shape");
+            life.transform.position = nextLifeSpawnpoint.transform.position;
+            life.tag = "Life";
+            BoxCollider boxCollider = life.AddComponent<BoxCollider>();
+            boxCollider.isTrigger = true;
         }
     }
+}
 
     private IEnumerator ShowCorrectPanel()
     {
@@ -165,62 +190,80 @@ public class Gameplay : MonoBehaviour
         isIncorrectAudioActive = false;
     }
 
-    public IEnumerator AddLifeCallback(GameObject gameObject)
+public IEnumerator AddLifeCallback(GameObject gameObject)
+{
+    // Destroy the life
+    Destroy(gameObject);
+
+    // Add the life
+    lifeText.text = ++lifeCount + "x";
+
+    // Play the sound for 2 seconds
+    isIncorrectAudioActive = false;
+    isCorrectAudioActive = !isMuted;
+    yield return new WaitForSeconds(2);
+    isCorrectAudioActive = false;
+}
+
+public void AnswerCallback(GameObject gameObject)
+{
+    float correctAnswer = 0;
+
+    // Find the value of the correct answer
+    foreach (Tuple<float, bool> ans in question.answers)
     {
-        Destroy(gameObject);
-        lifeText.text = ++lifeCount + "x";
-        isIncorrectAudioActive = false;
-        isCorrectAudioActive = !isMuted;
-        yield return new WaitForSeconds(2);
-        isCorrectAudioActive = false;
+        if (ans.Item2)
+        {
+            correctAnswer = ans.Item1;
+            break;
+        }
     }
 
-    public void AnswerCallback(GameObject gameObject)
+    // If the player did not collide with anything
+    if (gameObject == null)
     {
-        float correctAnswer = 0;
+        // Reset the multiplier and decrement the life count
+        score.ResetMultiplier();
+        --lifeCount;
 
-        foreach (Tuple<float, bool> ans in question.answers)
-        {
-            if (ans.Item2)
-            {
-                correctAnswer = ans.Item1;
-                break;
-            }
-        }
+        // Show the incorrect panel with the message
+        StartCoroutine(ShowIncorrectPanel(question.question + " = " + correctAnswer));
+        return;
+    }
 
-        if (gameObject == null)
-        {
-            score.ResetMultiplier();
-            --lifeCount;
-            StartCoroutine(ShowIncorrectPanel(question.question + " = " + correctAnswer));
-            return;
-        }
+    // Get the answer collided by the player
+    float answer = float.Parse(answers[int.Parse(gameObject.name)].transform.Find("text").GetComponent<TextMesh>().text); ;
 
-        float answer = float.Parse(answers[int.Parse(gameObject.name)].transform.Find("text").GetComponent<TextMesh>().text); ;
-
-        if (answer != correctAnswer)
-        {
-            score.ResetMultiplier();
-            --lifeCount;
-            StartCoroutine(ShowIncorrectPanel(question.question + " = " + correctAnswer));
-        }
-        else
-        {
-            score.IncrementMultiplier();
-            StartCoroutine(ShowCorrectPanel());
-        }
+    // The player answered wrongly
+    if (answer != correctAnswer)
+    {
+        // Reset the multiplier, decrement the life count and show the incorrect panel
+        score.ResetMultiplier();
+        --lifeCount;
+        StartCoroutine(ShowIncorrectPanel(question.question + " = " + correctAnswer));
+    }
+    else
+    {
+        // Increase the multiplier and show the correct panel
+        score.IncrementMultiplier();
+        StartCoroutine(ShowCorrectPanel());
+    }
             
-        Destroy(gameObject);
+    // Remove the collided object
+    Destroy(gameObject);
 
-        lifeText.text = lifeCount + "x";
+    // Update the life count display
+    lifeText.text = lifeCount + "x";
 
-        if (lifeCount <= 0)
-        {
-            UpdateHighscore();
-            DataPersistence.SetPreviousScore(score.GetScore());
-            SceneManager.LoadScene("GameOver");
-        }
+    // End the game if the life count falls to 0
+    if (lifeCount <= 0)
+    {
+        // Update the highscore and load the game over scene
+        UpdateHighscore();
+        DataPersistence.SetPreviousScore(score.GetScore());
+        SceneManager.LoadScene("GameOver");
     }
+}
 
     public void UpdateHighscore()
     {

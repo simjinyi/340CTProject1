@@ -37,9 +37,11 @@ public class Score
             return;
         }
 
+        // Calculate the distance travelled by the player since the last invocation
         float increment = z - prevPosition;
         prevPosition = z;
 
+        // Update the score based on the player position and mulitplier
         score += increment * multiplier / 10;
         scoreText.text = ((int) score).ToString();
     }

@@ -44,9 +44,8 @@ public class PlayerMovement : MonoBehaviour
 		speed = 30;
 	}
 
-    // We marked this as "Fixed"Update because we
-    // are using it to mess with physics.
-    void FixedUpdate()
+	// Use FixedUpdate to ensure the physics uphold
+	void FixedUpdate()
 	{
 		// Add a forward force if the velocity is less than maximum
 		if (rigidBody.velocity.magnitude < speed)
@@ -54,14 +53,16 @@ public class PlayerMovement : MonoBehaviour
 
 		rigidBody.AddForce(0, -forwardForce * Time.deltaTime, 0);
 
-		if (Input.GetKey(KeyCode.RightArrow))  // If the player is pressing the "d" key
+		// If the player is pressing the right arrow key
+		if (Input.GetKey(KeyCode.RightArrow))  
 		{
 			if (enable_move_right)
 				// Add a force to the right
 				rigidBody.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
 
-		if (Input.GetKey(KeyCode.LeftArrow))  // If the player is pressing the "a" key
+		// If the player is pressing the left arrow key
+		if (Input.GetKey(KeyCode.LeftArrow))  
 		{
 			if (enable_move_left)
 				// Add a force to the left
@@ -71,8 +72,9 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
+		// Add force automatically when colliding with the fence
 		if (collision.gameObject.tag == FENCE_TAG)
-        {
+		{
 			rigidBody.AddForce(sidewaysForce * 2 * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 			enable_move_left = enable_move_right = false;
 		}
@@ -92,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
 			rigidBody.AddForce(-sidewaysForce * 2 * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
 		}
 
+		// Callback when collided with the answer
 		if (collision.gameObject.tag == "Answer")
 			gameplay.AnswerCallback(collision.gameObject);
 	}
@@ -111,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+		// Add a life to the player
 		if (collider.gameObject.tag == "Life")
 			StartCoroutine(gameplay.AddLifeCallback(collider.gameObject));
 	}
